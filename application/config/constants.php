@@ -38,6 +38,15 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 define('APP_NAME', 'NightJar');
 
+/* encoding */
+define('PASSWORD_ENCODING',						'sha256');
+
+/* TABLES */
+define('TABLE_CLIENT', 							'client');
+
+/* MODELS */
+define('MODEL_CLIENT', 							'ClientModel');
+
 /* JOIN */
 define('TABLE',									'table');
 define('COLUMNS',								'column');
