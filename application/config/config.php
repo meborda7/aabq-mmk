@@ -15,7 +15,7 @@
 |
 */
 $config['base_url']	= 'http://localhost/nightjar/';
-//$config['base_url']	= 'http://localhost/nightjar/aabq-mmk/';
+//$config['base_url']	= 'http://lcalhost/nightjar/aabq-mmk/';
 
 /*
 |--------------------------------------------------------------------------
