@@ -18,12 +18,12 @@
 		</tr>
 		<?php foreach ($results['result'] as $row) { $id = $row['id']; ?>
 			<tr>
-				<td><?php echo $row['first_name'] ?></td>
-				<td><?php echo $row['last_name'] ?></td>
-				<td><?php echo $row['username'] ?></td>
-				<td><?php echo $row['password'] ?></td>
-				<td><?php echo $row['email'] ?></td>
-				<td><?php echo $row['contact_no'] ?></td>
+				<td><?php echo $row[FNAME] ?></td>
+				<td><?php echo $row[LNAME] ?></td>
+				<td><?php echo $row[UNAME] ?></td>
+				<td><?php echo $row[PWD] ?></td>
+				<td><?php echo $row[EMAIL] ?></td>
+				<td><?php echo $row[CONTACT] ?></td>
 				<td>
 					<a href="<?php echo base_url(); ?>client/update/<?php echo $id ?>" class="btn btn-info btn-xs">Update</a>
 					<a href="<?php echo base_url(); ?>client/delete/<?php echo $id ?>" class="btn btn-danger btn-xs">Delete</a>
