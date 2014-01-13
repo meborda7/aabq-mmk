@@ -37,5 +37,9 @@ class BaseController extends CI_Controller {
     public function _isPost() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') return true; else return false;
     }
+	
+	function IsNullOrEmptyString($var){
+		return (!isset($var) || trim($var)==='');
+	}
 
 }

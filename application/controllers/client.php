@@ -2,6 +2,18 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
+	
+define('ID', 							'id');
+define('FNAME', 						'first_name');
+define('LNAME', 						'last_name');
+define('UNAME', 						'username');
+define('PWD', 							'password');
+define('ADDRESS', 						'address');
+define('EMAIL', 						'email');
+define('CONTACT', 						'contact_no');
+define('PHOTO', 						'photo');
+define('DATE_CREATED', 					'date_created');
+define('DATE_MODIFIED', 				'date_modified');
 
 class Client extends BaseController {
 
@@ -62,7 +74,6 @@ class Client extends BaseController {
 	public function modify(){
 		$this->load->model(MODEL_CLIENT);     
 		$id = strip_tags($this->input->post(ID));	
-		$fname = "myahdz";	
 		$fname = strip_tags($this->input->post(FNAME));	
         $lname = strip_tags($this->input->post(LNAME));
         $uname = strip_tags($this->input->post(UNAME));
@@ -89,9 +100,9 @@ class Client extends BaseController {
 			$data[contact] = $contact;
 		}				
 		if( isset($data) ){
-			echo json_encode(array(RESULT => $this->ClientModel->update($data, array(ID=>1))));
+			echo json_encode(array(RESULT => $this->ClientModel->update($data, array(ID=>$id))));
 		} else {
-			echo "FALSE";
+			echo json_encode(array(RESULT => FALSE));
 		}
 	}
 	
@@ -114,6 +125,11 @@ class Client extends BaseController {
 	public function selectClient($id){
 		$this->load->model(MODEL_CLIENT);          
 		echo json_encode(array(RESULT => $this->ClientModel->select(null, array(ID=>$id))));	
+	}
+	
+	public function deleteClient($id){
+		$this->load->model(MODEL_CLIENT);          	
+		echo json_encode(array(RESULT => $this->ClientModel->delete(array(ID=>$id))));
 	}
 }
 

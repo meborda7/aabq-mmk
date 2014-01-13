@@ -120,7 +120,7 @@ class BaseModel extends CI_Model{
 		if($conditions != NULL){
 			$result=$this->db->delete($this->table, $conditions);
 		}
-		return FALSE;
+		return $result;
     }
 	
 }
