@@ -22,6 +22,15 @@ class Professional_services extends BaseController {
 		$data['services'] = $this->selectAll();
         $this->load->view($this->layout, $data);
 	}
+
+	public function add() {
+		$data['title']    = 'Add New Service | ' . APP_NAME;
+		$data['content']  = 'prof_services/add_edit';
+		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
+		$data['activeId'] = 2;
+		$this->load->view($this->layout, $data);
+	}
+
 	public function register(){
 		$this->load->model(MODEL_CLIENT);
 		$data = $this->input->post();

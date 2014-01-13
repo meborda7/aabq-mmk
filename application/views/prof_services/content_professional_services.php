@@ -3,7 +3,7 @@
 		$results = json_decode($services, true);		
 	?>
 	<div class="well">
-		<a href="<?php echo base_url(); ?>client/add" class="btn btn-warning"><span class="glyphicon glyphicon-plus"></span> Add New Service</a>
+		<a href="<?php echo base_url(); ?>professional_services/add" class="btn btn-warning"><span class="glyphicon glyphicon-plus"></span> Add New Service</a>
 	</div>
 	
 	<table class="table table-striped table-bordered">
