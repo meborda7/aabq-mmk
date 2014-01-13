@@ -2,6 +2,18 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
+	
+define('ID', 							'id');
+define('FNAME', 						'first_name');
+define('LNAME', 						'last_name');
+define('UNAME', 						'username');
+define('PWD', 							'password');
+define('ADDRESS', 						'address');
+define('EMAIL', 						'email');
+define('CONTACT', 						'contact_no');
+define('PHOTO', 						'photo');
+define('DATE_CREATED', 					'date_created');
+define('DATE_MODIFIED', 				'date_modified');
 
 class Client extends BaseController {
 	
