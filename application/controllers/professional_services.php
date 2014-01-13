@@ -15,16 +15,26 @@ define('SLA', 							'sla');
 class Professional_services extends BaseController {
 	
 	public function index() {
-		$data['title'] = 'Professional Services | ' . APP_NAME;
-        $data['content'] = 'content_professional_services';
-        $data['css'] = base_url() . 'assets/css/jumbotron-narrow.css';
+		$data['title']    = 'Professional Services | ' . APP_NAME;
+		$data['content']  = 'prof_services/content_professional_services';
+		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
+		$data['activeId'] = 2;
+		$data['services'] = $this->selectAll();
         $this->load->view($this->layout, $data);
 	}
+<<<<<<< HEAD
 	
 	public function register(){
 		$this->load->model(MODEL_CLIENT);
 		$data = $this->input->post();
 	}
+=======
+
+	public function selectAll() {         
+		$this->load->model(MODEL_PROF_SERVICES);        
+		return json_encode(array(RESULT => $this->ProfServicesModel->select()));
+    }
+>>>>>>> c1330c4820be98e312adcb35f594d353aced4f7c
 }
 
 /* End of file professional_services.php */

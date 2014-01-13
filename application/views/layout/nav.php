@@ -1,9 +1,23 @@
 <div class="header">
     <h3 class="text-muted"><?php echo isset($title) ? $title : APP_NAME; ?></h3>
 </div>
-<ul class="nav nav-pills">
-	<li><a href="<?php echo base_url(); ?>home/">Home</a></li>
-	<li><a href="<?php echo base_url(); ?>client/">Client</a></li>
-	<li><a href="<?php echo base_url(); ?>professional_services/">Professional Services</a></li>
-	<li><a href="<?php echo base_url(); ?>client_services/">CLient Services</a></li>
+<ul class="nav nav-tabs" style="margin-bottom: 10px;">
+
+	<?php
+		$navigations = array(
+			'home/'                  => 'Home',
+			'client/'                => 'Client',
+			'professional_services/' => 'Professional Services',
+			'client_services/'       => 'Client Services'
+		);
+
+
+		$i = 0;
+		foreach ($navigations as $key => $value) {
+			echo ($activeId == $i) ? '<li class="active">' : '<li>';
+			echo '<a href="'. base_url().$key .'">'. $value .'</a>';
+			echo '</li>';
+			$i++;
+		}
+	?>
 </ul>

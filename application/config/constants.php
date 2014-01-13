@@ -47,6 +47,7 @@ define('TABLE_PROF_SERVICES',					'prof_services');
 
 /* MODELS */
 define('MODEL_CLIENT', 							'ClientModel');
+define('MODEL_PROF_SERVICES', 					'ProfServicesModel');
 
 /* JOIN */
 define('TABLE',									'table');
