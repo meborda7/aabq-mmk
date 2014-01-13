@@ -4,12 +4,30 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Client extends BaseController {
-	
+
 	public function index() {
-		$data['title'] = 'Client | ' . APP_NAME;
-        $data['content'] = 'content_client';
-        $data['css'] = base_url() . 'assets/css/jumbotron-narrow.css';
-        $this->load->view($this->layout, $data);
+		$data['title']    = 'Client | ' . APP_NAME;
+		$data['content']  = 'client/content_client';
+		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
+		$data['activeId'] = 1;
+		$data['clients']  = $this->selectAll();
+		$this->load->view($this->layout, $data);
+	}
+
+	public function add() {
+		$data['title']    = 'Add New CLient | ' . APP_NAME;
+		$data['content']  = 'client/add_edit';
+		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
+		$data['activeId'] = 1;
+		$this->load->view($this->layout, $data);
+	}
+
+	public function update($id) {
+		$data['title']    = 'Update CLient | ' . APP_NAME;
+		$data['content']  = 'client/add_edit';
+		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
+		$data['activeId'] = 1;
+		$this->load->view($this->layout, $data);
 	}
 	
 	public function register(){
@@ -90,7 +108,7 @@ class Client extends BaseController {
 	
 	public function selectAll() {         
 		$this->load->model(MODEL_CLIENT);        
-		echo json_encode(array(RESULT => $this->ClientModel->select()));
+		return json_encode(array(RESULT => $this->ClientModel->select()));
     }
 	
 	public function selectClient($id){
