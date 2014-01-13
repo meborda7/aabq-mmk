@@ -22,19 +22,15 @@ class Professional_services extends BaseController {
 		$data['services'] = $this->selectAll();
         $this->load->view($this->layout, $data);
 	}
-<<<<<<< HEAD
-	
 	public function register(){
 		$this->load->model(MODEL_CLIENT);
 		$data = $this->input->post();
 	}
-=======
 
 	public function selectAll() {         
 		$this->load->model(MODEL_PROF_SERVICES);        
 		return json_encode(array(RESULT => $this->ProfServicesModel->select()));
     }
->>>>>>> c1330c4820be98e312adcb35f594d353aced4f7c
 }
 
 /* End of file professional_services.php */
