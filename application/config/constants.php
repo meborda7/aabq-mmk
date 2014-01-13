@@ -43,6 +43,7 @@ define('PASSWORD_ENCODING',						'sha256');
 
 /* TABLES */
 define('TABLE_CLIENT', 							'client');
+define('TABLE_PROF_SERVICES',					'prof_services');
 
 /* MODELS */
 define('MODEL_CLIENT', 							'ClientModel');
