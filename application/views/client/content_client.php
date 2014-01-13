@@ -26,7 +26,7 @@
 				<td><?php echo $row[CONTACT] ?></td>
 				<td>
 					<a href="<?php echo base_url(); ?>client/update/<?php echo $id ?>" class="btn btn-info btn-xs">Update</a>
-					<a href="<?php echo base_url(); ?>client/delete/<?php echo $id ?>" class="btn btn-danger btn-xs">Delete</a>
+					<a href="<?php echo base_url(); ?>client/deleteClient/<?php echo $id ?>" class="btn btn-danger btn-xs">Delete</a>
 				</td>
 			</tr>
 		<?php } ?>
