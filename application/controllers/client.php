@@ -14,6 +14,7 @@ define('CONTACT', 						'contact_no');
 define('PHOTO', 						'photo');
 define('DATE_CREATED', 					'date_created');
 define('DATE_MODIFIED', 				'date_modified');
+define('NAV_ACTIVE_ID',					1);
 
 class Client extends BaseController {
 
@@ -21,7 +22,7 @@ class Client extends BaseController {
 		$data['title']    = 'Client | ' . APP_NAME;
 		$data['content']  = 'client/content_client';
 		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
-		$data['activeId'] = 1;
+		$data['activeId'] = NAV_ACTIVE_ID;
 		$data['clients']  = $this->selectAll();
 		$this->load->view($this->layout, $data);
 	}
@@ -30,7 +31,7 @@ class Client extends BaseController {
 		$data['title']    = 'Add New CLient | ' . APP_NAME;
 		$data['content']  = 'client/add_edit';
 		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
-		$data['activeId'] = 1;
+		$data['activeId'] = NAV_ACTIVE_ID;
 		$this->load->view($this->layout, $data);
 	}
 
@@ -38,7 +39,7 @@ class Client extends BaseController {
 		$data['title']    = 'Update CLient | ' . APP_NAME;
 		$data['content']  = 'client/add_edit';
 		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
-		$data['activeId'] = 1;
+		$data['activeId'] = NAV_ACTIVE_ID;
 		$this->load->view($this->layout, $data);
 	}
 	

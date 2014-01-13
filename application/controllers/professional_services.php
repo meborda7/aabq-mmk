@@ -11,6 +11,7 @@ define('PWD', 							'password');
 define('REMARKS', 						'remarks');
 define('DISCOUNT', 						'discount');
 define('SLA', 							'sla');
+define('NAV_ACTIVE_ID',					2);
 
 class Professional_services extends BaseController {
 	
@@ -18,7 +19,7 @@ class Professional_services extends BaseController {
 		$data['title']    = 'Professional Services | ' . APP_NAME;
 		$data['content']  = 'prof_services/content_professional_services';
 		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
-		$data['activeId'] = 2;
+		$data['activeId'] = NAV_ACTIVE_ID;
 		$data['services'] = $this->selectAll();
         $this->load->view($this->layout, $data);
 	}
@@ -27,7 +28,7 @@ class Professional_services extends BaseController {
 		$data['title']    = 'Add New Service | ' . APP_NAME;
 		$data['content']  = 'prof_services/add_edit';
 		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
-		$data['activeId'] = 2;
+		$data['activeId'] = NAV_ACTIVE_ID;
 		$this->load->view($this->layout, $data);
 	}
 

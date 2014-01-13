@@ -14,7 +14,7 @@
 
 		$i = 0;
 		foreach ($navigations as $key => $value) {
-			echo ($activeId == $i) ? '<li class="active">' : '<li>';
+			echo (NAV_ACTIVE_ID == $i) ? '<li class="active">' : '<li>';
 			echo '<a href="'. base_url().$key .'">'. $value .'</a>';
 			echo '</li>';
 			$i++;
