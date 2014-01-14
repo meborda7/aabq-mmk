@@ -33,14 +33,58 @@ class Professional_services extends BaseController {
 	}
 
 	public function register(){
-		$this->load->model(MODEL_CLIENT);
+		$this->load->model(MODEL_PROF_SERVICES);
 		$data = $this->input->post();
+		echo json_encode(array(RESULT => $this->ProfServicesModel->update($data, array(ID=>$id))));
 	}
-
 	public function selectAll() {         
 		$this->load->model(MODEL_PROF_SERVICES);        
-		return json_encode(array(RESULT => $this->ProfServicesModel->select()));
+		echo json_encode(array(RESULT => $this->ProfServicesModel->select()));
     }
+	public function select($id){
+		$this->load->model(MODEL_PROF_SERVICES);          
+		echo json_encode(array(RESULT => $this->ProfServicesModel->select(null, array(ID=>$id))));	
+	}
+	
+	public function delete($id){
+		$this->load->model(MODEL_PROF_SERVICES);          	
+		echo json_encode(array(RESULT => $this->ProfServicesModel->delete(array(ID=>$id))));
+	}
+	
+	public function modify(){
+		$this->load->model(MODEL_PROF_SERVICES);     
+		$id = strip_tags($this->input->post(ID));	
+		$name = strip_tags($this->input->post(NAME));	
+        $desc = strip_tags($this->input->post(DESCRIPTION));
+        $price = strip_tags($this->input->post(PRICE));
+        $remarks = strip_tags($this->input->post(REMARKS));
+        $discount = strip_tags($this->input->post(DISCOUNT));
+        $sla = strip_tags($this->input->post(SLA));
+		$data = array(); 
+		if( !$this->IsNullOrEmptyString($name) ){
+			$data[NAME] = $name;
+		}
+		if( !$this->IsNullOrEmptyString($desc) ){
+			$data[DESCRIPTION] = $desc;
+		}
+		if( !$this->IsNullOrEmptyString($price) && is_numeric($price)){
+			$data[PRICE] = $price;
+		}
+		if( !$this->IsNullOrEmptyString($remarks) ){
+			$data[REMARKS] = $remarks;
+		}
+		if( !$this->IsNullOrEmptyString($discount) && is_numeric($discount)){
+			$data[DISCOUNT] = $discount;
+		}
+		if( !$this->IsNullOrEmptyString($sla) ){
+			$data[SLA] = $sla;
+		}				
+		if( isset($data) ){
+			echo json_encode(array(RESULT => $this->ProfServicesModel->update($data, array(ID=>$id))));
+		} else {
+			echo json_encode(array(RESULT => FALSE));
+		}
+	}
 }
 
 /* End of file professional_services.php */
