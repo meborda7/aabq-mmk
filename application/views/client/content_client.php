@@ -1,11 +1,11 @@
 <div class="">
 	<?php
-		$results = json_decode($clients, true);		
+		$results = json_decode($clients, true);
 	?>
 	<div class="well">
 		<a href="<?php echo base_url(); ?>client/add" class="btn btn-warning"><span class="glyphicon glyphicon-plus"></span> Add New Client</a>
 	</div>
-	
+
 	<table class="table table-striped table-bordered">
 		<tr>
 			<th>First Name</th>

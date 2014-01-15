@@ -2,7 +2,7 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-	
+
 define('ID', 							'id');
 define('FNAME', 						'first_name');
 define('LNAME', 						'last_name');
@@ -43,18 +43,18 @@ class Client extends BaseController {
 		$data['client_data'] = $this->selectClient($id);
 		$this->load->view($this->layout, $data);
 	}
-	
+
 	public function register(){
 		$this->load->model(MODEL_CLIENT);
-		
+
 		$fname   = strip_tags($this->input->post(FNAME));
 		$lname   = strip_tags($this->input->post(LNAME));
 		$uname   = strip_tags($this->input->post(UNAME));
-		$pwd     = strip_tags($this->input->post(PWD));		
+		$pwd     = strip_tags($this->input->post(PWD));
 		$address = strip_tags($this->input->post(ADDRESS));
 		$email   = strip_tags($this->input->post(EMAIL));
 		$contact = strip_tags($this->input->post(CONTACT));
-		
+
 		if( $uname != NULL && !$this->isExistingUsername($uname) && $pwd != NULL){
 			$pwd = hash ( PASSWORD_ENCODING, $pwd );
 			$data = array(
@@ -72,17 +72,17 @@ class Client extends BaseController {
 			echo json_encode(array(RESULT => FALSE));
 		}
 	}
-	
-	public function modify($id){
-		$this->load->model(MODEL_CLIENT);     
-		//$id      = strip_tags($this->input->post(ID));	
-		$fname   = strip_tags($this->input->post(FNAME));	
+
+	public function modify(){
+		$this->load->model(MODEL_CLIENT);
+		$id      = strip_tags($this->input->post(ID));
+		$fname   = strip_tags($this->input->post(FNAME));
 		$lname   = strip_tags($this->input->post(LNAME));
 		$uname   = strip_tags($this->input->post(UNAME));
 		$address = strip_tags($this->input->post(ADDRESS));
 		$email   = strip_tags($this->input->post(EMAIL));
 		$contact = strip_tags($this->input->post(CONTACT));
-		$data    = array(); 
+		$data    = array();
 
 		if( !$this->IsNullOrEmptyString($fname) ){
 			$data[FNAME] = $fname;
@@ -101,16 +101,18 @@ class Client extends BaseController {
 		}
 		if( !$this->IsNullOrEmptyString($contact) ){
 			$data[CONTACT] = $contact;
-		}				
+		}
 		if( isset($data) ){
 			echo json_encode(array(RESULT => $this->ClientModel->update($data, array(ID=>$id))));
 		} else {
 			echo json_encode(array(RESULT => FALSE));
 		}
+
+		echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
 	}
-	
-	public function isExistingUsername($uname = NULL){	
-		$this->load->model(MODEL_CLIENT);        
+
+	public function isExistingUsername($uname = NULL){
+		$this->load->model(MODEL_CLIENT);
 		if($uname != NULL){
 			$result = $this->ClientModel->select(null, array(UNAME=>$uname));
 			if($result != NULL && count($result) > 0){
@@ -119,19 +121,19 @@ class Client extends BaseController {
 		}
 		return FALSE;
 	}
-	
-	public function selectAll() {         
-		$this->load->model(MODEL_CLIENT);        
+
+	public function selectAll() {
+		$this->load->model(MODEL_CLIENT);
 		return json_encode(array(RESULT => $this->ClientModel->select()));
-    }
-	
-	public function selectClient($id){
-		$this->load->model(MODEL_CLIENT);          
-		return json_encode(array(RESULT => $this->ClientModel->select(null, array(ID=>$id))));	
 	}
-	
+
+	public function selectClient($id){
+		$this->load->model(MODEL_CLIENT);
+		return json_encode(array(RESULT => $this->ClientModel->select(null, array(ID=>$id))));
+	}
+
 	public function deleteClient($id){
-		$this->load->model(MODEL_CLIENT);          	
+		$this->load->model(MODEL_CLIENT);
 		echo json_encode(array(RESULT => $this->ClientModel->delete(array(ID=>$id))));
 	}
 }
