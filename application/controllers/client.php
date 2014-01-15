@@ -71,6 +71,8 @@ class Client extends BaseController {
 		else {
 			echo json_encode(array(RESULT => FALSE));
 		}
+
+		echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
 	}
 
 	public function modify(){
@@ -135,6 +137,7 @@ class Client extends BaseController {
 	public function deleteClient($id){
 		$this->load->model(MODEL_CLIENT);
 		echo json_encode(array(RESULT => $this->ClientModel->delete(array(ID=>$id))));
+		echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
 	}
 }
 

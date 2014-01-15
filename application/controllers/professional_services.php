@@ -7,14 +7,13 @@ define('ID', 							'id');
 define('NAME', 							'name');
 define('DESCRIPTION',					'description');
 define('PRICE', 						'price');
-define('PWD', 							'password');
 define('REMARKS', 						'remarks');
 define('DISCOUNT', 						'discount');
 define('SLA', 							'sla');
 define('NAV_ACTIVE_ID',					2);
 
 class Professional_services extends BaseController {
-	
+
 	public function index() {
 		$data['title']    = 'Professional Services | ' . APP_NAME;
 		$data['content']  = 'prof_services/content_professional_services';
@@ -32,35 +31,67 @@ class Professional_services extends BaseController {
 		$this->load->view($this->layout, $data);
 	}
 
+	public function update($id) {
+		$data['title']        = 'Update Service | ' . APP_NAME;
+		$data['content']      = 'prof_services/add_edit';
+		$data['css']          = base_url() . 'assets/css/bootstrap-theme.min.css';
+		$data['activeId']     = NAV_ACTIVE_ID;
+		$data['service_data'] = $this->select($id);
+		$this->load->view($this->layout, $data);
+	}
+
 	public function register(){
 		$this->load->model(MODEL_PROF_SERVICES);
-		$data = $this->input->post();
-		echo json_encode(array(RESULT => $this->ProfServicesModel->update($data, array(ID=>$id))));
+
+		$name        = strip_tags($this->input->post(NAME));
+		$description = strip_tags($this->input->post(DESCRIPTION));
+		$price       = strip_tags($this->input->post(PRICE));
+		$remarks     = strip_tags($this->input->post(REMARKS));
+		$discount    = strip_tags($this->input->post(DISCOUNT));
+		$sla         = strip_tags($this->input->post(SLA));
+
+		$data = array(
+			NAME        => 		$name,
+			DESCRIPTION => 		$description,
+			PRICE       => 		$price,
+			REMARKS     => 		$remarks,
+			DISCOUNT    => 		$discount,
+			SLA         => 		$sla
+		);
+
+		if (isset($data)) {
+			echo json_encode(array(RESULT => $this->ProfServicesModel->insert($data)));
+		} else {
+			echo json_encode(array(RESULT => FALSE));
+		}
+
+		echo '<br /><a href="'. base_url().'professional_services/' .'">View Professional Services</a>';
 	}
-	public function selectAll() {         
-		$this->load->model(MODEL_PROF_SERVICES);        
-		echo json_encode(array(RESULT => $this->ProfServicesModel->select()));
+	public function selectAll() {
+		$this->load->model(MODEL_PROF_SERVICES);
+		return json_encode(array(RESULT => $this->ProfServicesModel->select()));
     }
 	public function select($id){
-		$this->load->model(MODEL_PROF_SERVICES);          
-		echo json_encode(array(RESULT => $this->ProfServicesModel->select(null, array(ID=>$id))));	
+		$this->load->model(MODEL_PROF_SERVICES);
+		return json_encode(array(RESULT => $this->ProfServicesModel->select(null, array(ID=>$id))));
 	}
-	
+
 	public function delete($id){
-		$this->load->model(MODEL_PROF_SERVICES);          	
+		$this->load->model(MODEL_PROF_SERVICES);
 		echo json_encode(array(RESULT => $this->ProfServicesModel->delete(array(ID=>$id))));
+		echo '<br /><a href="'. base_url().'professional_services/' .'">View Professional Services</a>';
 	}
-	
+
 	public function modify(){
-		$this->load->model(MODEL_PROF_SERVICES);     
-		$id = strip_tags($this->input->post(ID));	
-		$name = strip_tags($this->input->post(NAME));	
-        $desc = strip_tags($this->input->post(DESCRIPTION));
-        $price = strip_tags($this->input->post(PRICE));
-        $remarks = strip_tags($this->input->post(REMARKS));
-        $discount = strip_tags($this->input->post(DISCOUNT));
-        $sla = strip_tags($this->input->post(SLA));
-		$data = array(); 
+		$this->load->model(MODEL_PROF_SERVICES);
+		$id       = strip_tags($this->input->post(ID));
+		$name     = strip_tags($this->input->post(NAME));
+		$desc     = strip_tags($this->input->post(DESCRIPTION));
+		$price    = strip_tags($this->input->post(PRICE));
+		$remarks  = strip_tags($this->input->post(REMARKS));
+		$discount = strip_tags($this->input->post(DISCOUNT));
+		$sla      = strip_tags($this->input->post(SLA));
+		$data     = array();
 		if( !$this->IsNullOrEmptyString($name) ){
 			$data[NAME] = $name;
 		}
@@ -70,20 +101,23 @@ class Professional_services extends BaseController {
 		if( !$this->IsNullOrEmptyString($price) && is_numeric($price)){
 			$data[PRICE] = $price;
 		}
-		if( !$this->IsNullOrEmptyString($remarks) ){
-			$data[REMARKS] = $remarks;
-		}
+
+		// remarks can be null
+		$data[REMARKS] = $remarks;
+
 		if( !$this->IsNullOrEmptyString($discount) && is_numeric($discount)){
 			$data[DISCOUNT] = $discount;
 		}
 		if( !$this->IsNullOrEmptyString($sla) ){
 			$data[SLA] = $sla;
-		}				
+		}
 		if( isset($data) ){
 			echo json_encode(array(RESULT => $this->ProfServicesModel->update($data, array(ID=>$id))));
 		} else {
 			echo json_encode(array(RESULT => FALSE));
 		}
+
+		echo '<br /><a href="'. base_url().'professional_services/' .'">View Professional Services</a>';
 	}
 }
 
