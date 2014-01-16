@@ -67,6 +67,38 @@ class Client_services extends BaseController {
 		}
 	}
 	
+	public function delete($id){
+		$this->load->model(MODEL_CLIENT_SERVICES);
+		echo json_encode(array(RESULT => $this->ClientServiceModel->delete(array(ID=>$id))));
+	}
+	
+	public function getClientAvailedServices($id){
+		$this->load->model(MODEL_CLIENT_SERVICES);
+		
+		$join = array(
+			array(
+				TABLE => TABLE_PROF_SERVICES,
+				COLUMNS => SERVICE_ID . "=" . TABLE_PROF_SERVICES . "." . ID,
+				JOIN_TYPE => JOIN_RIGHT
+			)
+		);
+		
+		echo json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, array(CLIENT_ID => $id), NULL, $join )));
+	}
+	
+	public function getServiceClients($id){
+		$this->load->model(MODEL_CLIENT_SERVICES);
+		
+		$join = array(
+			array(
+				TABLE => TABLE_CLIENT,
+				COLUMNS => CLIENT_ID . "=" . TABLE_CLIENT . "." . ID,
+				JOIN_TYPE => JOIN_RIGHT
+			)
+		);
+		
+		echo json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, array(SERVICE_ID => $id), NULL, $join )));
+	}	
 }
 
 /* End of file client_services.php */

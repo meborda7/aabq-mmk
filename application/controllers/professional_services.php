@@ -67,10 +67,12 @@ class Professional_services extends BaseController {
 
 		echo '<br /><a href="'. base_url().'professional_services/' .'">View Professional Services</a>';
 	}
+	
 	public function selectAll() {
 		$this->load->model(MODEL_PROF_SERVICES);
 		return json_encode(array(RESULT => $this->ProfServicesModel->select()));
     }
+	
 	public function select($id){
 		$this->load->model(MODEL_PROF_SERVICES);
 		return json_encode(array(RESULT => $this->ProfServicesModel->select(null, array(ID=>$id))));
