@@ -118,6 +118,19 @@ class Client_services extends BaseController {
 			echo 'id ' . $item['id'] . '</br>';
 		}
 	}
+	
+	public function request() {
+		$data['title']    = 'Request Service | ' . APP_NAME;
+		$data['content']  = 'client_services/apply_service';
+		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
+		$data['activeId'] = NAV_ACTIVE_ID;
+		
+		
+		$this->load->model(MODEL_PROF_SERVICES);
+		$data['services'] = json_encode(array(RESULT => $this->ProfServicesModel->select()));
+		
+		$this->load->view($this->layout, $data);
+	}
 }
 
 /* End of file client_services.php */
