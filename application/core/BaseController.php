@@ -5,15 +5,15 @@ if (!defined('BASEPATH'))
 
 /**
  * File: BaseController.php
- * 
- * PHP version 
+ *
+ * PHP version
  *
  * @category Core
  * @package  core
  * @author   Meldy Eborda <meborda7@gmail.com>
- * @license  
+ * @license
 */
- 
+
 /**
  * Class BaseController
  *
@@ -29,17 +29,40 @@ class BaseController extends CI_Controller {
         parent::__construct();
         $this->layout = "layout/master";
     }
-    
+
     public function _filter() {
         if (!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH']=="XMLHttpRequest")) redirect('auth/login');
     }
-    
+
     public function _isPost() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') return true; else return false;
     }
-	
+
 	function IsNullOrEmptyString($var){
 		return (!isset($var) || trim($var)==='');
 	}
 
+    /**
+     * Retrieves all data present in the dataModel.
+     */
+    public function selectAll($dataModel) {
+        $this->load->model($dataModel);
+        return json_encode(array(RESULT => $this->$dataModel->select()));
+    }
+
+    /**
+     * Retrieves one data value present in the data model.
+     */
+    public function select($dataModel, $id) {
+        $this->load->model($dataModel);
+        return json_encode(array(RESULT => $this->$dataModel->select(null, array(ID=>$id))));
+    }
+
+    /**
+     * Removes one data value from the dataModel.
+     */
+    public function delete($dataModel, $id) {
+        $this->load->model($dataModel);
+        return json_encode(array(RESULT => $this->$dataModel->delete(array(ID=>$id))));
+    }
 }
