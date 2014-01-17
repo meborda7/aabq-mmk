@@ -111,6 +111,13 @@ class Client_services extends BaseController {
 
 		echo json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, array(SERVICE_ID => $id), NULL, $join )));
 	}
+	
+	public function testLoop(){
+		$json = json_decode($this->getClientAvailedServices(1), TRUE);		
+		foreach ($json['client_service'] as $item) {
+			echo 'id ' . $item['id'] . '</br>';
+		}
+	}
 }
 
 /* End of file client_services.php */
