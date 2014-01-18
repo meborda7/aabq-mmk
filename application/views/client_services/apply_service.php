@@ -21,7 +21,7 @@
 				<td><?php echo $row['discount'] ?></td>
 				<td><?php echo $row['sla'] ?></td>
 				<td style="width:12%">
-					<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#md_request">
+					<button class="btn btn-primary btn-lg rq_btn" id="<?php echo $row['id']; ?>" data-toggle="modal" data-target="#md_request">
 					  Request
 					</button>
 				</td>
@@ -41,11 +41,11 @@
 				<table class="table">
 					  <tr>
 						<td>Start date: </td>
-						<td><input class="form-control date-form" type="text" id="date_start" readonly></td>
+						<td><input class="form-control date-form" type="text" id="date_start" name="date_start" data-date-format="yyyy-mm-dd" readonly></td>
 					  </tr>
 					  <tr>
 						<td>End date:</td>
-						<td><input class="form-control date-form" type="text" id="date_end" readonly></td>
+						<td><input class="form-control date-form" type="text" data-date-format="yyyy-mm-dd" id="date_end" name="date_end" readonly></td>
 					  </tr>
 					  <tr>
 						<td>Remarks:</td>

@@ -1,4 +1,11 @@
 $(function(){
+	$('.rq_btn').click(
+		function(e){
+			alert("hello");
+			$('#service_id').attr("value",e.target.id);
+		}
+	);
+
 	var nowTemp = new Date();
 	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
