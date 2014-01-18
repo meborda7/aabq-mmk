@@ -1,13 +1,7 @@
 <div class="">
 	<?php
 		$results = json_decode($services, true);
-<<<<<<< HEAD
 	?>	
-=======
-	?>
-	
-
->>>>>>> 5d0203dbaa0aa378aaa9ab70a66a4f2b6097695f
 	<table class="table table-striped table-bordered">
 		<tr>
 			<th>Name</th>
@@ -27,18 +21,13 @@
 				<td><?php echo $row['discount'] ?></td>
 				<td><?php echo $row['sla'] ?></td>
 				<td style="width:12%">
-<<<<<<< HEAD
 					<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#md_request">
 					  Request
 					</button>
-=======
-					<a href="<?php echo base_url(); ?>professional_services/request/<?php echo $id ?>" class="btn btn-info btn-xs">Request</a>
->>>>>>> 5d0203dbaa0aa378aaa9ab70a66a4f2b6097695f
 				</td>
 			</tr>
 		<?php } ?>
 	</table>
-<<<<<<< HEAD
 	<div class="modal fade" id="md_request" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 		<div class="modal-content">
@@ -73,6 +62,4 @@
 		</div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-=======
->>>>>>> 5d0203dbaa0aa378aaa9ab70a66a4f2b6097695f
 </div>
