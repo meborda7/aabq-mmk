@@ -1,0 +1,15 @@
+.datepicker {
+  z-index: 500000;
+  /*.dow {
+    border-top: 1px solid #ddd !important;
+  }*/
+
+}
+
+.date-form{
+	text-align: right;
+}
+
+textarea{
+	width: 100%;
+}

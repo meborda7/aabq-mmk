@@ -10,6 +10,7 @@ define('CLIENT_ID', 					'client_id');
 define('SERVICE_ID', 					'service_id');
 define('DATE_START', 					'date_start');
 define('DATE_END', 						'date_end');
+define('REMARKS', 						'remarks');
 
 
 class Client_services extends BaseController {
@@ -23,18 +24,23 @@ class Client_services extends BaseController {
 		$this->load->view($this->layout, $data);
 	}
 
-	public function register(){
+	public function register($client_id = NULL){
 		$this->load->model(MODEL_CLIENT_SERVICES);
 
-		$client_id   = strip_tags($this->input->post(CLIENT_ID));
+		if( $client_id  == NULL ){
+			$client_id   = strip_tags($this->input->post(CLIENT_ID));
+		}
 		$service_id  = strip_tags($this->input->post(SERVICE_ID));
 		$date_start  = strip_tags($this->input->post(DATE_START));
 		$date_end     = strip_tags($this->input->post(DATE_END));
+		$date_end     = strip_tags($this->input->post(DATE_END));
+		$remarks     = strip_tags($this->input->post(REMARKS));
 		$data = array(
 			CLIENT_ID 		=> 		$client_id,
 			SERVICE_ID 		=> 		$service_id,
 			DATE_START 		=> 		$date_start,
-			DATE_END 		=> 		$date_end
+			DATE_END 		=> 		$date_end,
+			REMARKS 		=> 		$remarks
 		);
 		echo json_encode(array(RESULT => $this->ClientServiceModel->insert($data)));
 	}
@@ -117,6 +123,18 @@ class Client_services extends BaseController {
 		foreach ($json['client_service'] as $item) {
 			echo 'id ' . $item['id'] . '</br>';
 		}
+	}
+	
+	public function request_list() {
+		$data['title']    = 'Request Service | ' . APP_NAME;
+		$data['content']  = 'client_services/apply_service';
+		$data['js']      = base_url() . 'assets/js/bootstrap-datepicker.js';
+		$data['js']      = base_url() . 'assets/js/client_services.js';
+		$data['activeId'] = NAV_ACTIVE_ID;
+		$this->load->model(MODEL_PROF_SERVICES);
+		$data['services'] = json_encode(array(RESULT => $this->ProfServicesModel->select()));
+		
+		$this->load->view($this->layout, $data);
 	}
 }
 

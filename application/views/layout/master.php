@@ -4,6 +4,9 @@
         <meta charset="utf-8">
         <title><?php echo isset($title) ? $title : APP_NAME; ?></title>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/datepicker.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/global.css" />
         <?php
         if (isset($css)) {
             if (is_array($css)) {
@@ -32,7 +35,7 @@
         </div>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/global.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.js"></script>
         <?php
         if (isset($script)) {
             if (is_array($script)) {
