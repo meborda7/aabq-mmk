@@ -1,11 +1,21 @@
 $(function(){
 	$('.rq_btn').click(
 		function(e){
-			alert("hello");
+			
+
+
+	$.ajax({
+		type            : 'GET',
+		contentType : 'json',
+		url              : 'http://localhost/nightjar/aabq-mmk/client_services/getClientAvailedServices/2/',
+		success       : function(data) {
+			console.log(data);
+		}
+	});
 			$('#service_id').attr("value",e.target.id);
 		}
 	);
-
+	
 	var nowTemp = new Date();
 	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
