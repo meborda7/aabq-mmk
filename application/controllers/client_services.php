@@ -19,8 +19,9 @@ class Client_services extends BaseController {
 		$data['title']           = 'Client Services | ' . APP_NAME;
 		$data['content']         = 'client_services/content_client_services';
 		$data['css']             = base_url() . 'assets/css/bootstrap-theme.min.css';
+		$data['js']              = base_url() . 'assets/js/client_services.js';
 		$data['activeId']        = NAV_ACTIVE_ID;
-		$data['client_services'] = $this->getAllClientServices();
+		$data['client_data']     = $this->selectAll(MODEL_CLIENT);
 		$this->load->view($this->layout, $data);
 	}
 
@@ -120,14 +121,14 @@ class Client_services extends BaseController {
 
 		echo json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, array(SERVICE_ID => $id), NULL, $join )));
 	}
-	
+
 	public function testLoop(){
-		$json = json_decode($this->getClientAvailedServices(1), TRUE);		
+		$json = json_decode($this->getClientAvailedServices(1), TRUE);
 		foreach ($json['client_service'] as $item) {
 			echo 'id ' . $item['id'] . '</br>';
 		}
 	}
-	
+
 	public function request_list() {
 		$data['title']    = 'Request Service | ' . APP_NAME;
 		$data['content']  = 'client_services/request_service_list';
@@ -136,10 +137,10 @@ class Client_services extends BaseController {
 		$data['activeId'] = NAV_ACTIVE_ID;
 		$this->load->model(MODEL_PROF_SERVICES);
 		$data['services'] = json_encode(array(RESULT => $this->ProfServicesModel->select()));
-		
+
 		$this->load->view($this->layout, $data);
 	}
-	
+
 	public function add($id) {
 		$data['title']    = 'Request Service | ' . APP_NAME;
 		$data['content']  = 'client_services/add_edit';
@@ -152,10 +153,10 @@ class Client_services extends BaseController {
 			$data['name'] = $service[0]->name;
 		}
 		$data['activeId'] = NAV_ACTIVE_ID;
-		
+
 		$this->load->view($this->layout, $data);
-	}	
-	
+	}
+
 	public function update($id) {
 		$data['title']    = 'Request Service | ' . APP_NAME;
 		$data['content']  = 'client_services/add_edit';
@@ -168,11 +169,11 @@ class Client_services extends BaseController {
 			$data['service'] = $service[RESULT][0];
 		}
 		$data['activeId'] = NAV_ACTIVE_ID;
-		
+
 		$this->load->view($this->layout, $data);
 	}
-	
-	public function selectService($id){		
+
+	public function selectService($id){
 		$this->load->model(MODEL_CLIENT_SERVICES);
 
 		$join = array(
@@ -181,8 +182,13 @@ class Client_services extends BaseController {
 				COLUMNS   => SERVICE_ID . "=" . TABLE_PROF_SERVICES . "." . ID,
 				JOIN_TYPE => JOIN_RIGHT			)
 		);
-		
+
 		return json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, array(TABLE_CLIENT_SERVICES . "." . ID => $id), NULL, $join )));
+	}
+
+	//******************** API CALLS ********************
+	public function api_getClientAvailedServices($id) {
+		echo $this->getClientAvailedServices($id);
 	}
 }
 
