@@ -61,6 +61,8 @@ define('JOIN_RIGHT',							'right');
 /* COLUMNS */
 define('ROW_ID',						'id');
 define('RESULT',						'result');
+define('ERROR', 						'error');
+define('ERROR_MSG', 					'Empty or invalid value.');
 
 
 /* End of file constants.php */

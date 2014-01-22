@@ -27,25 +27,37 @@ class Client extends BaseController {
 		$this->load->view($this->layout, $data);
 	}
 
-	public function add() {
+	public function add($update_data = NULL, $error_data = NULL)  {
 		$data['title']    = 'Add New CLient | ' . APP_NAME;
 		$data['content']  = 'client/add_edit';
 		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
 		$data['activeId'] = NAV_ACTIVE_ID;
+		$data['isModify'] = FALSE;
+		if($update_data != NULL){
+			$data['client_data'] = $update_data;
+			$data['error_data'] = $error_data;
+		}
 		$this->load->view($this->layout, $data);
 	}
 
-	public function update($id) {
+	public function update($id, $updateData = NULL, $error_data = NULL) {
 		$data['title']       = 'Update CLient | ' . APP_NAME;
 		$data['content']     = 'client/add_edit';
 		$data['css']         = base_url() . 'assets/css/bootstrap-theme.min.css';
 		$data['activeId']    = NAV_ACTIVE_ID;
-		$data['client_data'] = $this->selectClient($id);
+		$data['isModify'] 	 = TRUE;
+		if($updateData != null){
+			$data['client_data'] = $updateData;
+			$data['error_data'] = $error_data;
+		} else {
+			$data['client_data'] = $this->selectClient($id);
+		}
 		$this->load->view($this->layout, $data);
 	}
 
 	public function register(){
 		$this->load->model(MODEL_CLIENT);
+		$flag = TRUE;
 
 		$fname   = strip_tags($this->input->post(FNAME));
 		$lname   = strip_tags($this->input->post(LNAME));
@@ -54,8 +66,60 @@ class Client extends BaseController {
 		$address = strip_tags($this->input->post(ADDRESS));
 		$email   = strip_tags($this->input->post(EMAIL));
 		$contact = strip_tags($this->input->post(CONTACT));
+		$data    = array();
+		$error_msg = array();
 
-		if( $uname != NULL && !$this->isExistingUsername($uname) && $pwd != NULL){
+		if( !$this->IsNullOrEmptyString($fname) ){
+			$data[FNAME] = $fname;
+			$error_msg[FNAME] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[FNAME] = ERROR_MSG;
+		}
+		if( !$this->IsNullOrEmptyString($lname) ){
+			$data[LNAME] = $lname;
+			$error_msg[LNAME] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[LNAME] = ERROR_MSG;
+		}
+		if( !$this->IsNullOrEmptyString($pwd) ){
+			$data[PWD] = $pwd;
+			$error_msg[PWD] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[PWD] = ERROR_MSG;
+		}
+		if( !$this->IsNullOrEmptyString($uname) ){
+			$data[UNAME] = $uname;
+			$error_msg[UNAME] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[UNAME] = ERROR_MSG;
+		}
+		if( !$this->IsNullOrEmptyString($address) ){
+			$data[ADDRESS] = $address;
+			$error_msg[ADDRESS] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[ADDRESS] = ERROR_MSG;
+		}
+		if( !$this->IsNullOrEmptyString($email) ){
+			$data[EMAIL] = $email;
+			$error_msg[EMAIL] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[EMAIL] = ERROR_MSG;
+		}
+		if( !$this->IsNullOrEmptyString($contact) ){
+			$data[CONTACT] = $contact;
+			$error_msg[CONTACT] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[CONTACT] = ERROR_MSG;
+		}
+		
+		if( $flag  && $uname != NULL && !$this->isExistingUsername($uname) && $pwd != NULL){
 			$pwd = hash ( PASSWORD_ENCODING, $pwd );
 			$data = array(
 				FNAME 		=> 		$fname,
@@ -67,50 +131,84 @@ class Client extends BaseController {
 				CONTACT 	=> 		$contact
 			);
 			echo json_encode(array(RESULT => $this->ClientModel->insert($data)));
+			echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
 		}
 		else {
-			echo json_encode(array(RESULT => FALSE));
+			$this->add($data, $error_msg);
 		}
-
-		echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
 	}
 
 	public function modify(){
 		$this->load->model(MODEL_CLIENT);
+		$flag 	 = TRUE;
 		$id      = strip_tags($this->input->post(ID));
 		$fname   = strip_tags($this->input->post(FNAME));
 		$lname   = strip_tags($this->input->post(LNAME));
 		$uname   = strip_tags($this->input->post(UNAME));
+		$pwd     = strip_tags($this->input->post(PWD));
 		$address = strip_tags($this->input->post(ADDRESS));
 		$email   = strip_tags($this->input->post(EMAIL));
 		$contact = strip_tags($this->input->post(CONTACT));
 		$data    = array();
+		$error_msg = array();
 
 		if( !$this->IsNullOrEmptyString($fname) ){
 			$data[FNAME] = $fname;
+			$error_msg[FNAME] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[FNAME] = ERROR_MSG;
 		}
 		if( !$this->IsNullOrEmptyString($lname) ){
 			$data[LNAME] = $lname;
+			$error_msg[LNAME] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[LNAME] = ERROR_MSG;
 		}
 		if( !$this->IsNullOrEmptyString($uname) ){
 			$data[UNAME] = $uname;
+			$error_msg[UNAME] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[UNAME] = ERROR_MSG;
+		}
+		if( !$this->IsNullOrEmptyString($pwd) ){
+			$data[PWD] = $pwd;
+			$error_msg[PWD] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[PWD] = ERROR_MSG;
 		}
 		if( !$this->IsNullOrEmptyString($address) ){
 			$data[ADDRESS] = $address;
+			$error_msg[ADDRESS] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[ADDRESS] = ERROR_MSG;
 		}
 		if( !$this->IsNullOrEmptyString($email) ){
 			$data[EMAIL] = $email;
+			$error_msg[EMAIL] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[EMAIL] = ERROR_MSG;
 		}
 		if( !$this->IsNullOrEmptyString($contact) ){
 			$data[CONTACT] = $contact;
-		}
-		if( isset($data) ){
-			echo json_encode(array(RESULT => $this->ClientModel->update($data, array(ID=>$id))));
+			$error_msg[CONTACT] = "";
 		} else {
-			echo json_encode(array(RESULT => FALSE));
+			$flag = FALSE;
+			$error_msg[CONTACT] = ERROR_MSG;
+		}
+		
+		if( $flag == TRUE && isset($data) ){
+			echo json_encode(array(RESULT => $this->ClientModel->update($data, array(ID=>$id))));
+			echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
+		} else {
+			$this->update($id, $data, $error_msg);
 		}
 
-		echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
 	}
 
 	public function isExistingUsername($uname = NULL){
