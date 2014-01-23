@@ -206,6 +206,7 @@ class Client extends BaseController {
 			echo json_encode(array(RESULT => $this->ClientModel->update($data, array(ID=>$id))));
 			echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
 		} else {
+			$data[ID] = $id;
 			$this->update($id, $data, $error_msg);
 		}
 
