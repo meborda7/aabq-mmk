@@ -105,6 +105,6 @@
 		<label for="photo">Photo: </label>
 		<input type="file" name="<?php echo PHOTO; ?>" id="<?php echo PHOTO; ?>" /><br />
 
-		<input style="width: 100%" type="submit" class="btn btn-primary" name="contactSubmit" value="<?php echo $btnSubmitStr; ?>" />
+		<input style="width: 100%"  disabled="disabled" id="frm_submit" type="submit" class="btn btn-primary" name="contactSubmit" value="<?php echo $btnSubmitStr; ?>" />
 	</form>
 </div>

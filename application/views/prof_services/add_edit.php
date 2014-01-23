@@ -49,6 +49,6 @@
 		<label for="sla">Service-Level Agreement: </label>
 		<input class="form-control" type="text" name="<?php echo SLA; ?>" id="<?php echo SLA; ?>" value="<?php echo $sla; ?>" /><br />
 
-		<input style="width: 100%" type="submit" class="btn btn-primary" value="<?php echo $btnSubmitStr; ?>" />
+		<input style="width: 100%" type="submit" id="frm_submit" disabled="disabled" class="btn btn-primary" value="<?php echo $btnSubmitStr; ?>" />
 	</form>
 </div>

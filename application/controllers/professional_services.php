@@ -27,6 +27,7 @@ class Professional_services extends BaseController {
 		$data['title']    = 'Add New Service | ' . APP_NAME;
 		$data['content']  = 'prof_services/add_edit';
 		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
+		$data['js']          = base_url() . 'assets/js/client.js';
 		$data['activeId'] = NAV_ACTIVE_ID;
 		$this->load->view($this->layout, $data);
 	}
@@ -35,6 +36,7 @@ class Professional_services extends BaseController {
 		$data['title']        = 'Update Service | ' . APP_NAME;
 		$data['content']      = 'prof_services/add_edit';
 		$data['css']          = base_url() . 'assets/css/bootstrap-theme.min.css';
+		$data['js']          = base_url() . 'assets/js/client.js';
 		$data['activeId']     = NAV_ACTIVE_ID;
 		$data['service_data'] = $this->select($id);
 		$this->load->view($this->layout, $data);

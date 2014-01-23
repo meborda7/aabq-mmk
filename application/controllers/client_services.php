@@ -146,6 +146,7 @@ class Client_services extends BaseController {
 		$data['content']  = 'client_services/add_edit';
 		$data['js']      = base_url() . 'assets/js/bootstrap-datepicker.js';
 		$data['js']      = base_url() . 'assets/js/client_services.js';
+		$data['js']          = base_url() . 'assets/js/client.js';
 		$data['service_id']  =  $id;
 		$this->load->model(MODEL_PROF_SERVICES);
 		$service = $this->ProfServicesModel->select(null, array(ID=>$id));
@@ -161,7 +162,7 @@ class Client_services extends BaseController {
 		$data['title']    = 'Request Service | ' . APP_NAME;
 		$data['content']  = 'client_services/add_edit';
 		$data['js']      = base_url() . 'assets/js/bootstrap-datepicker.js';
-		$data['js']      = base_url() . 'assets/js/client_services.js';
+		$data['js']          = base_url() . 'assets/js/client.js';
 		$data['id']  =  $id;
 		$service = $this->selectService($id);
 		$service = json_decode($service, true);

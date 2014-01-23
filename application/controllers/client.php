@@ -32,6 +32,7 @@ class Client extends BaseController {
 		$data['content']  = 'client/add_edit';
 		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
 		$data['activeId'] = NAV_ACTIVE_ID;
+		$data['js']          = base_url() . 'assets/js/client.js';
 		$data['isModify'] = FALSE;
 		if($update_data != NULL){
 			$data['client_data'] = $update_data;
@@ -44,6 +45,7 @@ class Client extends BaseController {
 		$data['title']       = 'Update CLient | ' . APP_NAME;
 		$data['content']     = 'client/add_edit';
 		$data['css']         = base_url() . 'assets/css/bootstrap-theme.min.css';
+		$data['js']          = base_url() . 'assets/js/client.js';
 		$data['activeId']    = NAV_ACTIVE_ID;
 		$data['isModify'] 	 = TRUE;
 		if($updateData != null){
