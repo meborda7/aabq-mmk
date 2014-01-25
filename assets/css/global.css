@@ -19,3 +19,12 @@ textarea{
 	font-size: 9px;
 	margin-left: 5px;	
 }
+
+.upload_space{
+	padding: 30px;
+	text-align: center;
+	margin: 40px 0 20px;
+	border: 1px dashed #eeeeee;
+	font-size: 30px;
+	width: 100%;	
+}

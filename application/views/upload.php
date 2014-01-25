@@ -1,4 +1,15 @@
-<form enctype="multipart/form-data" action="<?php echo base_url() . "home/do_upload"; ?>" method="POST">
-	<input type="file" name="file[]" multiple />
-	<input type="submit">
+<form action="#" method="post" enctype="multipart/form-data">
+	<input type="file" name="files[]" multiple="multiple">
+	<input type="submit" value="Upload!">
 </form>
+
+<table class="table table-striped table-bordered">
+	<thead>
+		<th>File Name</th>
+		<th>Controls</th>
+	</thead>
+	<tbody id="tbody_uploaded_files">
+
+	</tbody>
+</table>
+
