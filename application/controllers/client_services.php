@@ -132,8 +132,8 @@ class Client_services extends BaseController {
 	public function request_list() {
 		$data['title']    = 'Request Service | ' . APP_NAME;
 		$data['content']  = 'client_services/request_service_list';
-		$data['js']      = base_url() . 'assets/js/bootstrap-datepicker.js';
-		$data['js']      = base_url() . 'assets/js/client_services.js';
+		$data['js']      = array(base_url() . 'assets/js/bootstrap-datepicker.js', 
+								base_url() . 'assets/js/client_services.js');
 		$data['activeId'] = NAV_ACTIVE_ID;
 		$this->load->model(MODEL_PROF_SERVICES);
 		$data['services'] = json_encode(array(RESULT => $this->ProfServicesModel->select()));
@@ -144,9 +144,9 @@ class Client_services extends BaseController {
 	public function add($id) {
 		$data['title']    = 'Request Service | ' . APP_NAME;
 		$data['content']  = 'client_services/add_edit';
-		$data['js']      = base_url() . 'assets/js/bootstrap-datepicker.js';
-		$data['js']      = base_url() . 'assets/js/client_services.js';
-		$data['js']          = base_url() . 'assets/js/client.js';
+		$data['js']      = array(base_url() . 'assets/js/bootstrap-datepicker.js',
+								base_url() . 'assets/js/client_services.js',
+								base_url() . 'assets/js/client.js');
 		$data['service_id']  =  $id;
 		$this->load->model(MODEL_PROF_SERVICES);
 		$service = $this->ProfServicesModel->select(null, array(ID=>$id));
