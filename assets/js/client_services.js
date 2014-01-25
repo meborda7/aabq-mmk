@@ -57,22 +57,24 @@ $(function(){
 				var content = '<table class="table table-striped table-bordered">'
 								+'<tr>'
 									+'<th>Name</th>'
-									+'<th>Description</th>'
 									+'<th>Price</th>'
 									+'<th>Remarks</th>'
 									+'<th>Discount</th>'
 									+'<th>SLA</th>'
+									+'<th>Start</th>'
+									+'<th>End</th>'
 								+'</tr>';
 
 				for (var i in data.client_service) {
 					var service = data.client_service[i];
 					content += '<tr>'
 								+'<td>'+ service.name +'</td>'
-								+'<td>'+ service.description +'</td>'
 								+'<td>'+ service.price +'</td>'
 								+'<td>'+ service.remarks +'</td>'
 								+'<td>'+ service.discount +'</td>'
-								+'<td>'+ service.sla +'</td>';
+								+'<td>'+ service.sla +'</td>'
+								+'<td>'+ service.date_start +'</td>'
+								+'<td>'+ service.date_end +'</td>';
 					content += '</tr>';
 
 					// validate appropriate values
