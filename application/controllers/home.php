@@ -27,7 +27,7 @@ class Home extends BaseController {
 	
 	public function do_upload(){
 		$config['upload_path'] = './uploads/';
-		$config['allowed_types'] = 'gif|jpg|png|jpeg|pdf|doc|zip|rar|ACTIONSCRIPT|as';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg|pdf|doc|zip|rar|as';
 		$config['max_size'] = '242048';
 		$config['max_width']  = '0';
 		$config['max_height']  = '0';

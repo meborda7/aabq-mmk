@@ -100,7 +100,8 @@ $mimes = array(	'hqx'	=>	'application/mac-binhex40',
 				'eml'	=>	'message/rfc822',
 				'json'  => array('application/json', 'text/json'),
 				'rar'   => array('application/x-rar-compressed', 'application/octet-stream'),
-				'zip'   => array('application/zip', 'application/octet-stream')
+				'zip'   => array('application/zip', 'application/octet-stream'),
+				'as'   => array('application/x-actionscript', 'text/x-actionscript')
 			);
 
 
