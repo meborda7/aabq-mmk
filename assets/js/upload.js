@@ -20,7 +20,7 @@ $(document).ready(function() {
 			contentType 	: 'json',
 			url             : './retrieves_files',
 			success       : function(result) {
-				$('#ttbody_uploaded_files').html('');
+				$('#tbody_uploaded_files').html('');
 				result = JSON.parse(result);
 				for (var key in result){
 					$('#tbody_uploaded_files').append(
