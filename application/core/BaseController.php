@@ -30,9 +30,11 @@ class BaseController extends CI_Controller {
         $this->layout = "layout/master";
     }
 
-    public function _filter() {
-        if (!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH']=="XMLHttpRequest")) redirect('auth/login');
-    }
+    public function requestFilter(){
+		if (!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH']=="XMLHttpRequest")) 
+			return FALSE;
+		return TRUE;
+	}
 
     public function _isPost() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') return true; else return false;

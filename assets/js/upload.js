@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	
 	var uploadOkay = function(resp) {
-		alert("Upload successful");
+		alert(resp);
 		populate_table();
 	};
 
@@ -26,10 +26,28 @@ $(document).ready(function() {
 					$('#tbody_uploaded_files').append(
 						'<tr>'+
 							'<td>' + result[key] + '</td>' +
-							'<td><button type="button" class="btn btn-danger">Delete</button></td>' +
+							'<td><button value="'+result[key]+'" type="button" class="btn btn-danger btn_delete_file">Delete</button></td>' +
 						+'</tr>'
 					);
 				}
+				$('.btn_delete_file').click(function(){
+					var me = $(this);
+					var filename = me.val();
+					delete_file(filename);
+				});
+			}
+		});
+	}
+	
+	function delete_file(filename){
+		$.ajax({
+			type            : 'POST',
+			contentType 	: 'json',
+			data 			: {'filename' : filename},
+			url             : './delete_file',
+			success       : function(result) {
+				alert(result);
+				populate_table();
 			}
 		});
 	}

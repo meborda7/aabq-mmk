@@ -19,7 +19,8 @@ class Client_services extends BaseController {
 		$data['title']           = 'Client Services | ' . APP_NAME;
 		$data['content']         = 'client_services/content_client_services';
 		$data['css']             = base_url() . 'assets/css/bootstrap-theme.min.css';
-		$data['js']              = base_url() . 'assets/js/client_services.js';
+		$data['js']              = array(base_url() . 'assets/js/client_services.js',
+										base_url() . 'assets/js/bootstrap-datepicker.js');
 		$data['activeId']        = NAV_ACTIVE_ID;
 		$data['client_data']     = $this->selectAll(MODEL_CLIENT);
 		$this->load->view($this->layout, $data);
@@ -188,8 +189,10 @@ class Client_services extends BaseController {
 	}
 
 	//******************** API CALLS ********************
-	public function api_getClientAvailedServices($id) {
-		echo $this->getClientAvailedServices($id);
+	public function api_getClientAvailedServices($id = NULL) {
+		if($this->requestFilter() == TRUE)
+			echo $this->getClientAvailedServices($id);
+		
 	}
 }
 

@@ -4,6 +4,10 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 define('NAV_ACTIVE_ID',					0);
+//define('EXT', '.'.pathinfo(__FILE__, PATHINFO_EXTENSION));
+define('FPATH', __FILE__);
+define('SELFIE', pathinfo(__FILE__, PATHINFO_BASENAME));
+define('PUBPATH',str_replace( "application\controllers\\" . SELFIE,'',FPATH)); // added 
 
 class Home extends BaseController {
     
@@ -23,25 +27,36 @@ class Home extends BaseController {
 								base_url() . 'assets/js/upload.js');
 		$data['activeId'] = NAV_ACTIVE_ID;		
         $this->load->view($this->layout, $data);	
+		echo SELFIE . '<br>';
+		echo PUBPATH;
 	}
 	
 	public function do_upload(){
 		$config['upload_path'] = './uploads/';
-		$config['allowed_types'] = 'gif|jpg|png|jpeg|pdf|doc|zip|rar|as';
-		$config['max_size'] = '242048';
-		$config['max_width']  = '0';
-		$config['max_height']  = '0';
+		$config['allowed_types'] = 'zip|rar|as|gif|jpg|png|jpeg|pdf|doc';
+		$config['max_size'] = '542048';
 		$config['remove_spaces'] = 'TRUE';
 		$this->upload->initialize($config);		  
-
+		$data = "Files uploaded";
 		foreach($_FILES as $k => $f):
-			$this->upload->do_upload($k);
+			if(!$this->upload->do_upload($k)){
+				$data = "Error uploading files";
+			}
 		endforeach;
+		echo json_encode($data);
 	}
 	
 	public function retrieves_files(){
 		$map = directory_map('./uploads');
 		echo json_encode($map);
+	}
+	
+	public function delete_file(){
+		$filename = strip_tags($this->input->post("filename"));
+		$filename = PUBPATH . 'uploads/' . $filename;
+		//if(is_file ( $filename ) ){
+			echo json_encode(unlink($filename));
+		//}
 	}
 	
 }
