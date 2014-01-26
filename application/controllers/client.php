@@ -240,6 +240,22 @@ class Client extends BaseController {
 		echo json_encode(array(RESULT => $this->ClientModel->delete(array(ID=>$id))));
 		echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
 	}
+	
+	
+	/** api calls */
+	
+	public function api_selectAll() {		
+		if($this->requestFilter() == TRUE){
+			echo $this->selectAll();
+		}
+	}
+
+	public function api_selectClient($id = NULL){
+		if($this->requestFilter() == TRUE && $id != NULL){
+			echo $this->selectClient($id);
+		}
+	}
+	
 }
 
 /* End of file client.php */

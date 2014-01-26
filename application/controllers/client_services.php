@@ -190,9 +190,9 @@ class Client_services extends BaseController {
 
 	//******************** API CALLS ********************
 	public function api_getClientAvailedServices($id = NULL) {
-		if($this->requestFilter() == TRUE)
+		if($this->requestFilter() == TRUE){
 			echo $this->getClientAvailedServices($id);
-		
+		}
 	}
 }
 
