@@ -260,9 +260,24 @@ class Client extends BaseController {
 			echo $this->selectClient($id);
 		}
 	}
-	
+	/* sample for delete array 
+	$.ajax({
+        type:'post',
+        dataType: 'json',
+        url: 'http://localhost/nightjar/client/api_deleteClients',
+        data: {
+            id : [20,21]
+        },
+        async: false,
+        success:
+        function(result){
+			alert(result);
+        },
+        error: function(request, status, error){}
+    });	
+	*/
 	public function api_deleteClients(){
-		$postData= array(15,16,17,18);
+		$postData= $this->input->post(ID);
 		if($this->requestFilter() == TRUE && $postData != NULL){
 			echo $this->deleteClient($postData);
 		}
