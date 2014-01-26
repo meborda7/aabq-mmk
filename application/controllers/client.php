@@ -23,7 +23,7 @@ class Client extends BaseController {
 		$data['content']  = 'client/content_client';
 		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
 		$data['activeId'] = NAV_ACTIVE_ID;
-		$data['clients']  = $this->selectAll();
+		$data['clients']  = $this->selectAll(MODEL_CLIENT);
 		$this->load->view($this->layout, $data);
 	}
 
@@ -213,10 +213,10 @@ class Client extends BaseController {
 		}
 
 	}
-
+	
 	public function isExistingUsername($uname = NULL){
-		$this->load->model(MODEL_CLIENT);
 		if($uname != NULL){
+			$this->load->model(MODEL_CLIENT);
 			$result = $this->ClientModel->select(null, array(UNAME=>$uname));
 			if($result != NULL && count($result) > 0){
 				return TRUE;
@@ -224,35 +224,53 @@ class Client extends BaseController {
 		}
 		return FALSE;
 	}
-
-	public function selectAll() {
-		$this->load->model(MODEL_CLIENT);
-		return json_encode(array(RESULT => $this->ClientModel->select()));
+	
+	public function selectClient($id = NULL){
+		if( $id != NULL ){
+			return $this->select(MODEL_CLIENT, $id);
+		}
 	}
 
-	public function selectClient($id){
-		$this->load->model(MODEL_CLIENT);
-		return json_encode(array(RESULT => $this->ClientModel->select(null, array(ID=>$id))));
+	public function deleteClient($id = NULL){
+		if( $id != NULL ){
+			var_dump($id);
+			if( is_array($id) ){
+				return $this->delete(MODEL_CLIENT, NULL, $id);
+			} else{
+				return $this->delete(MODEL_CLIENT, $id, NULL);				
+			} 
+			echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
+		}
 	}
 
-	public function deleteClient($id){
-		$this->load->model(MODEL_CLIENT);
-		echo json_encode(array(RESULT => $this->ClientModel->delete(array(ID=>$id))));
-		echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
+	public function deleteAllClients(){
+		return $this->deleteAll(MODEL_CLIENT);
 	}
 	
-	
-	/** api calls */
+	//******************** API CALLS ********************//
 	
 	public function api_selectAll() {		
 		if($this->requestFilter() == TRUE){
-			echo $this->selectAll();
+			echo $this->selectAll(MODEL_CLIENT);
 		}
 	}
 
 	public function api_selectClient($id = NULL){
 		if($this->requestFilter() == TRUE && $id != NULL){
 			echo $this->selectClient($id);
+		}
+	}
+	
+	public function api_deleteClients(){
+		$postData= array(15,16,17,18);
+		if($this->requestFilter() == TRUE && $postData != NULL){
+			echo $this->deleteClient($postData);
+		}
+	}
+	
+	public function api_deleteAllClients(){
+		if($this->requestFilter() == TRUE && $id != NULL){
+			echo $this->deleteAllClients();
 		}
 	}
 	

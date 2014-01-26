@@ -51,17 +51,43 @@ class Professional_services extends BaseController {
 		$remarks     = strip_tags($this->input->post(REMARKS));
 		$discount    = strip_tags($this->input->post(DISCOUNT));
 		$sla         = strip_tags($this->input->post(SLA));
+		$flag = TRUE;
+		$data    = array();
+		$error_msg = array();
+		
+		if( !$this->IsNullOrEmptyString($name) ){
+			$data[NAME] = $name;
+			$error_msg[NAME] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[NAME] = ERROR_MSG;
+		}
+		
+		if( !$this->IsNullOrEmptyString($description) ){
+			$data[DESCRIPTION] = $description;
+			$error_msg[DESCRIPTION] = "";
+		} else {
+			$flag = FALSE;
+			$error_msg[DESCRIPTION] = ERROR_MSG;
+		}
+		
+		if( !$this->IsNullOrEmptyString($price) ){
+			$data[PRICE] = $price;
+		} 
+		
+		if( !$this->IsNullOrEmptyString($remarks) ){
+			$data[REMARKS] = $remarks;
+		} 
+		
+		if( !$this->IsNullOrEmptyString($discount) ){
+			$data[DISCOUNT] = $discount;
+		} 
+		
+		if( !$this->IsNullOrEmptyString($sla) ){
+			$data[SLA] = $sla;
+		} 
 
-		$data = array(
-			NAME        => 		$name,
-			DESCRIPTION => 		$description,
-			PRICE       => 		$price,
-			REMARKS     => 		$remarks,
-			DISCOUNT    => 		$discount,
-			SLA         => 		$sla
-		);
-
-		if (isset($data)) {
+		if ($flag == TRUE) {	
 			echo json_encode(array(RESULT => $this->ProfServicesModel->insert($data)));
 		} else {
 			echo json_encode(array(RESULT => FALSE));

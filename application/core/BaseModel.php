@@ -109,17 +109,33 @@ class BaseModel extends CI_Model{
 	}
     
 	/**
-	 * Deletes specific row in the database based on the condition added
+	 * Deletes specific row/S in the database based on the condition added
 	 *
 	 * @access	public
+	 * @param	array
 	 * @param	array
 	 *
 	 * @return
 	 */
-    function delete($conditions = NULL) {
-		if($conditions != NULL){
+    function delete($conditions = NULL, $where_in = NULL) {
+		if($conditions != NULL && $where_in == NULL){
 			$result=$this->db->delete($this->table, $conditions);
+		} else if ($conditions == NULL && $where_in != NULL){
+			$this->db->where_in(ID, $where_in);
+			$result = $this->db->delete($this->table);
 		}
+		return $result;
+    }
+	
+	/**
+	 * Deletes all rows in the database
+	 *
+	 * @access	public
+	 *
+	 * @return
+	 */
+    function deleteAll() {
+		$result=$this->db->empty_table($this->table);
 		return $result;
     }
 	

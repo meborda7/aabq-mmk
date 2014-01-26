@@ -1,8 +1,21 @@
 $(function(){
+
+	var postData = {
+		id : [17,18]
+	};
+	$.ajax({
+		type            : 'POST',
+		contentType: 'application/json',
+       dataType:'json',
+		url              : 'http://localhost/nightjar/client/api_deleteClients', 
+		data : postData,
+		success       : function(result) {
+			alert(result);
+		}
+	});
+	
 	$('.rq_btn').click(
 		function(e){
-
-
 
 	$.ajax({
 		type            : 'GET',

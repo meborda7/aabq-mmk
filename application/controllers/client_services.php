@@ -184,11 +184,11 @@ class Client_services extends BaseController {
 				COLUMNS   => SERVICE_ID . "=" . TABLE_PROF_SERVICES . "." . ID,
 				JOIN_TYPE => JOIN_RIGHT			)
 		);
-
+		
 		return json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, array(TABLE_CLIENT_SERVICES . "." . ID => $id), NULL, $join )));
 	}
 
-	//******************** API CALLS ********************
+	//******************** API CALLS ********************//
 	public function api_getClientAvailedServices($id = NULL) {
 		if($this->requestFilter() == TRUE){
 			echo $this->getClientAvailedServices($id);
