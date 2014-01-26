@@ -12,3 +12,29 @@
 	</tbody>
 </table>
 
+<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Modify file</h4>
+      </div>
+      <div class="modal-body">
+		<table style="width: 100%;" >
+			<tr>
+				<td>Old filename : </td>
+				<td><input style="width: 100%;" class="form-control date-form" type="text" id="old_filename" name="old_filename" readonly></td>
+			</tr>
+			<tr>
+				<td>New filename : </td>
+				<td><input style="width: 100%;" class="form-control date-form" type="text" id="new_filename" name="new_filename" ></td>
+			</tr>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="btn_save" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
