@@ -37,44 +37,80 @@ class Client_services extends BaseController {
 		$date_end     = strip_tags($this->input->post(DATE_END));
 		$date_end     = strip_tags($this->input->post(DATE_END));
 		$remarks     = strip_tags($this->input->post(REMARKS));
-		$data = array(
-			CLIENT_ID 		=> 		$client_id,
-			SERVICE_ID 		=> 		$service_id,
-			DATE_START 		=> 		$date_start,
-			DATE_END 		=> 		$date_end,
-			REMARKS 		=> 		$remarks
-		);
-		echo json_encode(array(RESULT => $this->ClientServiceModel->insert($data)));
-	}
-
-	public function modify($id){
-		$this->load->model(MODEL_CLIENT_SERVICES);
-		$client_id  = strip_tags($this->input->post(CLIENT_ID));
-		$service_id = strip_tags($this->input->post(SERVICE_ID));
-		$date_start = strip_tags($this->input->post(DATE_START));
-		$date_end   = strip_tags($this->input->post(DATE_END));
-		$remarks   = strip_tags($this->input->post(REMARKS));
-		$data       = array();
+		$data    = array();
+		$error_msg = array();
+		$flag = TRUE;
+		
 		if( !$this->IsNullOrEmptyString($client_id) ){
 			$data[CLIENT_ID] = $client_id;
+		} else {
+			$flag = FALSE;
+			$error_msg[CLIENT_ID] = ERROR_MSG;
 		}
+		
 		if( !$this->IsNullOrEmptyString($service_id) ){
 			$data[SERVICE_ID] = $service_id;
+		} else {
+			$flag = FALSE;
+			$error_msg[SERVICE_ID] = ERROR_MSG;
 		}
+		
 		if( !$this->IsNullOrEmptyString($date_start) ){
 			$data[DATE_START] = $date_start;
+		} else {
+			$flag = FALSE;
+			$error_msg[DATE_START] = ERROR_MSG;
 		}
+		
 		if( !$this->IsNullOrEmptyString($date_end) ){
 			$data[DATE_END] = $date_end;
+		} else {
+			$flag = FALSE;
+			$error_msg[DATE_END] = ERROR_MSG;
 		}
+		
 		if( !$this->IsNullOrEmptyString($remarks) ){
 			$data[REMARKS] = $remarks;
 		}
+		
+		if($flag == TRUE){
+			echo json_encode(array(RESULT => $this->ClientServiceModel->insert($data)));
+		}
+	}
 
-		if( isset($data) ){
-			echo json_encode(array(RESULT => $this->ClientServiceModel->update($data, array(ID=>$id))));
-		} else {
-			echo json_encode(array(RESULT => FALSE));
+	public function modify($id = NULL){
+		if($id != NULL){
+			$this->load->model(MODEL_CLIENT_SERVICES);
+			$date_start = strip_tags($this->input->post(DATE_START));
+			$date_end   = strip_tags($this->input->post(DATE_END));
+			$remarks   = strip_tags($this->input->post(REMARKS));
+			$data       = array();
+			$error_msg = array();
+			$flag = TRUE;
+			
+			if( !$this->IsNullOrEmptyString($date_start) ){
+				$data[DATE_START] = $date_start;
+			} else {
+				$flag = FALSE;
+				$error_msg[DATE_START] = ERROR_MSG;
+			}
+			
+			if( !$this->IsNullOrEmptyString($date_end) ){
+				$data[DATE_END] = $date_end;
+			} else {
+				$flag = FALSE;
+				$error_msg[DATE_END] = ERROR_MSG;
+			}
+			
+			if( !$this->IsNullOrEmptyString($remarks) ){
+				$data[REMARKS] = $remarks;
+			}
+
+			if( isset($data) ){
+				echo json_encode(array(RESULT => $this->ClientServiceModel->update($data, array(ID=>$id))));
+			} else {
+				echo json_encode(array(RESULT => FALSE));
+			}
 		}
 	}
 
@@ -90,12 +126,12 @@ class Client_services extends BaseController {
 		return json_encode(array(RESULT => $data));
 	}
 
-	public function delete($id){
+	public function delete_clientservice($id){
 		echo $this->delete(MODEL_CLIENT_SERVICES, $id);
 		echo '<br /><a href="'. base_url().'client_services/' .'">View Client Services</a>';
 	}
 
-	public function getClientAvailedServices($id){
+	public function getClientAvailedServices($id = NULL){
 		$this->load->model(MODEL_CLIENT_SERVICES);
 
 		$join = array(
@@ -105,22 +141,26 @@ class Client_services extends BaseController {
 				JOIN_TYPE => JOIN_RIGHT
 			)
 		);
-
-		return json_encode(array("client_service" => $this->ClientServiceModel->select(NULL, array(CLIENT_ID => $id), NULL, $join )));
+		
+		if($id == NULL){
+			return json_encode(array("client_service" => $this->ClientServiceModel->select(NULL, NULL, NULL, $join )));
+		} else {
+			return json_encode(array("client_service" => $this->ClientServiceModel->select(NULL, array(CLIENT_ID => $id), NULL, $join )));
+		}
 	}
 
-	public function getServiceClients($id){
-		$this->load->model(MODEL_CLIENT_SERVICES);
-
-		$join = array(
-			array(
-				TABLE     => TABLE_CLIENT,
-				COLUMNS   => CLIENT_ID . "=" . TABLE_CLIENT . "." . ID,
-				JOIN_TYPE => JOIN_RIGHT
-			)
-		);
-
-		echo json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, array(SERVICE_ID => $id), NULL, $join )));
+	public function getServiceClients($id = NULL){
+		if( $id != NULL ) {
+			$this->load->model(MODEL_CLIENT_SERVICES);
+			$join = array(
+				array(
+					TABLE     => TABLE_CLIENT,
+					COLUMNS   => CLIENT_ID . "=" . TABLE_CLIENT . "." . ID,
+					JOIN_TYPE => JOIN_RIGHT
+				)
+			);
+			return json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, array(SERVICE_ID => $id), NULL, $join )));
+		}
 	}
 
 	public function testLoop(){
@@ -175,7 +215,7 @@ class Client_services extends BaseController {
 		$this->load->view($this->layout, $data);
 	}
 
-	public function selectService($id){
+	public function selectService($id = NULL){
 		$this->load->model(MODEL_CLIENT_SERVICES);
 
 		$join = array(
@@ -185,7 +225,11 @@ class Client_services extends BaseController {
 				JOIN_TYPE => JOIN_RIGHT			)
 		);
 		
-		return json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, array(TABLE_CLIENT_SERVICES . "." . ID => $id), NULL, $join )));
+		if( $id != NULL){
+			return json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, array(TABLE_CLIENT_SERVICES . "." . ID => $id), NULL, $join )));
+		} else {
+			return json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, NULL, NULL, $join )));
+		}
 	}
 
 	//******************** API CALLS ********************//
@@ -194,6 +238,25 @@ class Client_services extends BaseController {
 			echo $this->getClientAvailedServices($id);
 		}
 	}
+	
+	public function api_getServiceClients($id = NULL){
+		if($this->requestFilter() == TRUE && $id != NULL){
+			echo $this->getServiceClients($id);
+		}
+	}
+	
+	public function api_getAll(){
+		if($this->requestFilter() == TRUE && $id != NULL){
+			echo $this->getClientAvailedServices();
+		}
+	}
+	
+	public function api_deleteClientService($id = NULL){
+		if($this->requestFilter() == TRUE && $id != NULL){
+			echo $this->delete_clientservice($id);
+		}
+	}
+	
 }
 
 /* End of file client_services.php */

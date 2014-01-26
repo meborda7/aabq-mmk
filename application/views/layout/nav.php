@@ -9,7 +9,7 @@
 			'client/'                => 'Client',
 			'professional_services/' => 'Professional Services',
 			'client_services/'       => 'Client Services',
-			'upload/'       		 => 'Upload'
+			'files/'       		 => 'Upload'
 		);
 
 

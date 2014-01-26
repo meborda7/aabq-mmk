@@ -10,7 +10,7 @@ define('SELFIE', pathinfo(__FILE__, PATHINFO_BASENAME));
 define('PUBPATH',str_replace( "application\controllers\\" . SELFIE,'',FPATH)); // added 
 define('FILE_PATH', PUBPATH . 'uploads/' );
 
-class File extends BaseController {
+class Files extends BaseController {
 
 	public function index(){
 		$data['title']    = 'Upload | ' . APP_NAME;
