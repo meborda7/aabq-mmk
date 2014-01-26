@@ -202,8 +202,8 @@ class Client_services extends BaseController {
 	public function update($id) {
 		$data['title']    = 'Request Service | ' . APP_NAME;
 		$data['content']  = 'client_services/add_edit';
-		$data['js']      = base_url() . 'assets/js/bootstrap-datepicker.js';
-		$data['js']          = base_url() . 'assets/js/client.js';
+		$data['js']      = array(base_url() . 'assets/js/client_services.js',
+							base_url() . 'assets/js/bootstrap-datepicker.js');
 		$data['id']  =  $id;
 		$service = $this->selectService($id);
 		$service = json_decode($service, true);
