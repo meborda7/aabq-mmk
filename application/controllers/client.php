@@ -32,11 +32,11 @@ class Client extends BaseController {
 		$data['content']  = 'client/add_edit';
 		$data['css']      = base_url() . 'assets/css/bootstrap-theme.min.css';
 		$data['activeId'] = NAV_ACTIVE_ID;
-		$data['js']          = base_url() . 'assets/js/client.js';
+		$data['js']       = base_url() . 'assets/js/client.js';
 		$data['isModify'] = FALSE;
 		if($update_data != NULL){
 			$data['client_data'] = $update_data;
-			$data['error_data'] = $error_data;
+			$data['error_data']  = $error_data;
 		}
 		$this->load->view($this->layout, $data);
 	}
@@ -120,7 +120,7 @@ class Client extends BaseController {
 			$flag = FALSE;
 			$error_msg[CONTACT] = ERROR_MSG;
 		}
-		
+
 		if( $flag  && $uname != NULL && !$this->isExistingUsername($uname) && $pwd != NULL){
 			$pwd = hash ( PASSWORD_ENCODING, $pwd );
 			$data = array(
@@ -203,7 +203,7 @@ class Client extends BaseController {
 			$flag = FALSE;
 			$error_msg[CONTACT] = ERROR_MSG;
 		}
-		
+
 		if( $flag == TRUE && isset($data) ){
 			echo json_encode(array(RESULT => $this->ClientModel->update($data, array(ID=>$id))));
 			echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
@@ -213,7 +213,7 @@ class Client extends BaseController {
 		}
 
 	}
-	
+
 	public function isExistingUsername($uname = NULL){
 		if($uname != NULL){
 			$this->load->model(MODEL_CLIENT);
@@ -224,7 +224,7 @@ class Client extends BaseController {
 		}
 		return FALSE;
 	}
-	
+
 	public function selectClient($id = NULL){
 		if( $id != NULL ){
 			return $this->select(MODEL_CLIENT, $id);
@@ -237,8 +237,8 @@ class Client extends BaseController {
 			if( is_array($id) ){
 				return $this->delete(MODEL_CLIENT, NULL, $id);
 			} else{
-				return $this->delete(MODEL_CLIENT, $id, NULL);				
-			} 
+				return $this->delete(MODEL_CLIENT, $id, NULL);
+			}
 			echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
 		}
 	}
@@ -246,10 +246,10 @@ class Client extends BaseController {
 	public function deleteAllClients(){
 		return $this->deleteAll(MODEL_CLIENT);
 	}
-	
+
 	//******************** API CALLS ********************//
-	
-	public function api_selectAll() {		
+
+	public function api_selectAll() {
 		if($this->requestFilter() == TRUE){
 			echo $this->selectAll(MODEL_CLIENT);
 		}
@@ -260,7 +260,7 @@ class Client extends BaseController {
 			echo $this->selectClient($id);
 		}
 	}
-	/* sample for delete array 
+	/* sample for delete array
 	$.ajax({
         type:'post',
         dataType: 'json',
@@ -274,7 +274,7 @@ class Client extends BaseController {
 			alert(result);
         },
         error: function(request, status, error){}
-    });	
+    });
 	*/
 	public function api_deleteClients(){
 		$postData= $this->input->post(ID);
@@ -282,13 +282,13 @@ class Client extends BaseController {
 			echo $this->deleteClient($postData);
 		}
 	}
-	
+
 	public function api_deleteAllClients(){
 		if($this->requestFilter() == TRUE && $id != NULL){
 			echo $this->deleteAllClients();
 		}
 	}
-	
+
 }
 
 /* End of file client.php */
