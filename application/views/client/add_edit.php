@@ -8,7 +8,7 @@
 		$address       = "";
 		$email         = "";
 		$contact_no    = "";
-		
+
 		$err_fname  = "";
 		$err_lname  = "";
 		$err_uname  = "";
@@ -16,8 +16,8 @@
 		$err_add    = "";
 		$err_email  = "";
 		$err_cno    = "";
-		
-		
+
+
 		//$date_created  = "";
 		// $date_modified = "";
 		$photo         = "";
@@ -25,22 +25,21 @@
 		$formAction    = base_url() . "client/register";
 
 		// if client_data is set, meaning this is an update operation..
-		// ps : modified for validation; client_data can also be set if form data has invalid/empty fields 
+		// ps : modified for validation; client_data can also be set if form data has invalid/empty fields
 		// this is so we could still display previously inputted data; @ahdz : PLEASE CHECK FOR CONFIRMATION
 		if( isset($error_data) ){
 			var_dump($client_data);
-			if (array_key_exists(ID, $client_data)) 		$id  			= $client_data[ID];	
+			if (array_key_exists(ID, $client_data)) 		$id  			= $client_data[ID];
 			if (array_key_exists(FNAME, $client_data))		$first_name  	= $client_data[FNAME];
-			if (array_key_exists(LNAME, $client_data))		$last_name     	= $client_data[LNAME];			
-			if (array_key_exists(UNAME, $client_data))		$username     	= $client_data[UNAME];			
+			if (array_key_exists(LNAME, $client_data))		$last_name     	= $client_data[LNAME];
+			if (array_key_exists(UNAME, $client_data))		$username     	= $client_data[UNAME];
 			if (array_key_exists(ADDRESS, $client_data))	$address       	= $client_data[ADDRESS];
 			if (array_key_exists(EMAIL, $client_data))		$email        	= $client_data[EMAIL];
 			if (array_key_exists(CONTACT, $client_data))	$contact_no     = $client_data[CONTACT];
 			if (array_key_exists(PHOTO, $client_data))		$photo       	= $client_data[PHOTO];
-			
+
 			$password      = "";
-			
-			if (array_key_exists(PHOTO, $error_data))		$err_fname     	= $error_data[FNAME];
+
 			if (array_key_exists(FNAME, $error_data))		$err_fname     	= $error_data[FNAME];
 			if (array_key_exists(LNAME, $error_data))		$err_lname     	= $error_data[LNAME];
 			if (array_key_exists(UNAME, $error_data))		$err_uname     	= $error_data[UNAME];
@@ -49,7 +48,7 @@
 			if (array_key_exists(ADDRESS, $error_data))		$err_add       	= $error_data[ADDRESS];
 			if (array_key_exists(CONTACT, $error_data))		$err_cno       	= $error_data[CONTACT];
 			if (array_key_exists(PHOTO, $error_data))		$err_photo     	= $error_data[PHOTO];
-			
+
 		} else if (isset($client_data) && count($client_data) > 0) {
 			$client_data = json_decode($client_data, TRUE);
 			foreach($client_data['result'] as $client) {
@@ -65,7 +64,7 @@
 				// $date_created  = $row[DATE_CREATED];  automatically added in the db
 				// $date_modified = $row[DATE_MODIFIED];
 			}
-		}	
+		}
 		if( $isModify ){
 			$btnSubmitStr  = "Update Client";
 			$formAction    = base_url() . "client/modify";
@@ -95,7 +94,7 @@
 		<label for="contact_no">Contact No: </label><span class ="error_lbl"><?php echo $err_cno; ?></span>
 		<input class="form-control" type="text" name="<?php echo CONTACT; ?>" id="<?php echo CONTACT; ?>" value="<?php echo $contact_no; ?>" />
 
-		<!-- 
+		<!--
 		<label for="date_created">Date Created: </label>
 		<input class="form-control" type="datetime" name="<?php echo DATE_CREATED; ?>" id="<?php echo DATE_CREATED; ?>" value="<?php echo $date_created; ?>" />
 

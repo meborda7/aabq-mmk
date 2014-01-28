@@ -1,6 +1,6 @@
 <div class="">
 	<?php
-		$results = json_decode($services, true);
+		$results = json_decode($service_data, true);
 	?>
 	<div class="well">
 		<a href="<?php echo base_url(); ?>professional_services/add" class="btn btn-warning"><span class="glyphicon glyphicon-plus"></span> Add New Service</a>
