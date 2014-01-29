@@ -23,6 +23,7 @@ class Client_services extends BaseController {
 										base_url() . 'assets/js/bootstrap-datepicker.js');
 		$data['activeId']        = NAV_ACTIVE_ID;
 		$data['client_data']     = $this->selectAll(MODEL_CLIENT);
+		$data['services']        = json_decode($this->getServiceNames(), TRUE);
 		$this->load->view($this->layout, $data);
 	}
 
@@ -230,6 +231,11 @@ class Client_services extends BaseController {
 		} else {
 			return json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, NULL, NULL, $join )));
 		}
+	}
+	
+	public function getServiceNames(){
+		$this->load->model(MODEL_PROF_SERVICES);
+        return json_encode($this->ProfServicesModel->select(array(ID,'name')));
 	}
 
 	//******************** API CALLS ********************//
