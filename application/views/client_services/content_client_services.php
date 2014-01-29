@@ -16,6 +16,7 @@
 			echo '</select>';
 		?>
 		<button id="btn_get_services" class="btn btn-warning">Get Availed Services</button>
+		<a href="./request_list"><button id="btn_add_services" class="btn btn-primary">Request New Service</button></a>
 	</div>
 	<div class="" id="output" style="margin-top: 5px;">
 	</div>

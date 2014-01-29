@@ -3,14 +3,14 @@ $(function(){
 	$('.rq_btn').click(
 		function(e){
 
-	$.ajax({
-		type            : 'GET',
-		contentType : 'json',
-		url              : '/client_services/getClientAvailedServices/2/',
-		success       : function(data) {
-			console.log(data);
-		}
-	});
+			$.ajax({
+				type            : 'GET',
+				contentType : 'json',
+				url              : '/client_services/getClientAvailedServices/2/',
+				success       : function(data) {
+					console.log(data);
+				}
+			});
 			$('#service_id').attr("value",e.target.id);
 		}
 	);
@@ -62,10 +62,12 @@ $(function(){
 									+'<th>SLA</th>'
 									+'<th>Start</th>'
 									+'<th>End</th>'
+									+'<th>Controls</th>'
 								+'</tr>';
 
 				for (var i in data.client_service) {
 					var service = data.client_service[i];
+					console.log(service);
 					content += '<tr>'
 								+'<td>'+ service.name +'</td>'
 								+'<td>'+ service.price +'</td>'
@@ -73,7 +75,12 @@ $(function(){
 								+'<td>'+ service.discount +'</td>'
 								+'<td>'+ service.sla +'</td>'
 								+'<td>'+ service.date_start +'</td>'
-								+'<td>'+ service.date_end +'</td>';
+								+'<td>'+ service.date_end +'</td>'
+								+'<td>'
+									+'<button value="'+ service.id +'" type="button" class="btn btn-primary btn_update">Update</button>'
+									+ '<button value="'+ service.id +'" type="button" class="btn btn-danger btn_cancel">Cancel</button>'
+								+'</td>'
+								;
 					content += '</tr>';
 
 					// validate appropriate values
