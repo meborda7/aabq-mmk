@@ -7,7 +7,7 @@
 	<div class="well form-inline">
 		Select A Client:
 		<?php
-			echo '<select class="form-control" style="width: 20%;" id="select_client">';
+			echo '<select class="form-control" style="width: 20%;" id="select_client_id">';
 			foreach ($results as $row) {
 				echo '<option value="'. $row['id'] .'">';
 				echo $row['first_name'] . " " . $row['last_name'];
@@ -30,13 +30,13 @@
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h4 class="modal-title" id="myModalLabel">Request New Service</h4>
 	  </div>
-	  <div class="modal-body">	  
+	  <div class="modal-body">
 		<table class="table">
 			  <tr>
 				<td>Select A Service:</td>
-				<td>					
+				<td>
 					<?php
-						echo '<select class="form-control date-form" id="select_client">';
+						echo '<select class="form-control date-form" id="select_service_id">';
 						foreach ($services as $row) {
 							echo '<option value="'. $row['id'] .'">';
 							echo $row['name'];
@@ -62,7 +62,7 @@
 	  </div>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-		<button type="submit" id="frm_submit" class="btn btn-primary">Save changes</button>
+		<button type="submit" id="btn_save_service" class="btn btn-primary">Save changes</button>
 	  </div>
     </div>
   </div>

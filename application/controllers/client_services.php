@@ -41,39 +41,39 @@ class Client_services extends BaseController {
 		$data    = array();
 		$error_msg = array();
 		$flag = TRUE;
-		
+
 		if( !$this->IsNullOrEmptyString($client_id) ){
 			$data[CLIENT_ID] = $client_id;
 		} else {
 			$flag = FALSE;
 			$error_msg[CLIENT_ID] = ERROR_MSG;
 		}
-		
+
 		if( !$this->IsNullOrEmptyString($service_id) ){
 			$data[SERVICE_ID] = $service_id;
 		} else {
 			$flag = FALSE;
 			$error_msg[SERVICE_ID] = ERROR_MSG;
 		}
-		
+
 		if( !$this->IsNullOrEmptyString($date_start) ){
 			$data[DATE_START] = $date_start;
 		} else {
 			$flag = FALSE;
 			$error_msg[DATE_START] = ERROR_MSG;
 		}
-		
+
 		if( !$this->IsNullOrEmptyString($date_end) ){
 			$data[DATE_END] = $date_end;
 		} else {
 			$flag = FALSE;
 			$error_msg[DATE_END] = ERROR_MSG;
 		}
-		
+
 		if( !$this->IsNullOrEmptyString($remarks) ){
 			$data[REMARKS] = $remarks;
 		}
-		
+
 		if($flag == TRUE){
 			echo json_encode(array(RESULT => $this->ClientServiceModel->insert($data)));
 		}
@@ -88,21 +88,21 @@ class Client_services extends BaseController {
 			$data       = array();
 			$error_msg = array();
 			$flag = TRUE;
-			
+
 			if( !$this->IsNullOrEmptyString($date_start) ){
 				$data[DATE_START] = $date_start;
 			} else {
 				$flag = FALSE;
 				$error_msg[DATE_START] = ERROR_MSG;
 			}
-			
+
 			if( !$this->IsNullOrEmptyString($date_end) ){
 				$data[DATE_END] = $date_end;
 			} else {
 				$flag = FALSE;
 				$error_msg[DATE_END] = ERROR_MSG;
 			}
-			
+
 			if( !$this->IsNullOrEmptyString($remarks) ){
 				$data[REMARKS] = $remarks;
 			}
@@ -142,7 +142,7 @@ class Client_services extends BaseController {
 				JOIN_TYPE => JOIN_RIGHT
 			)
 		);
-		
+
 		if($id == NULL){
 			return json_encode(array("client_service" => $this->ClientServiceModel->select(NULL, NULL, NULL, $join )));
 		} else {
@@ -174,7 +174,7 @@ class Client_services extends BaseController {
 	public function request_list() {
 		$data['title']    = 'Request Service | ' . APP_NAME;
 		$data['content']  = 'client_services/request_service_list';
-		$data['js']      = array(base_url() . 'assets/js/bootstrap-datepicker.js', 
+		$data['js']      = array(base_url() . 'assets/js/bootstrap-datepicker.js',
 								base_url() . 'assets/js/client_services.js');
 		$data['activeId'] = NAV_ACTIVE_ID;
 		$this->load->model(MODEL_PROF_SERVICES);
@@ -225,7 +225,7 @@ class Client_services extends BaseController {
 				COLUMNS   => SERVICE_ID . "=" . TABLE_PROF_SERVICES . "." . ID,
 				JOIN_TYPE => JOIN_RIGHT			)
 		);
-		
+
 		if( $id != NULL){
 			return json_encode(array(RESULT => $this->ClientServiceModel->select(NULL, array(TABLE_CLIENT_SERVICES . "." . ID => $id), NULL, $join )));
 		} else {
@@ -244,25 +244,25 @@ class Client_services extends BaseController {
 			echo $this->getClientAvailedServices($id);
 		}
 	}
-	
+
 	public function api_getServiceClients($id = NULL){
 		if($this->requestFilter() == TRUE && $id != NULL){
 			echo $this->getServiceClients($id);
 		}
 	}
-	
+
 	public function api_getAll(){
 		if($this->requestFilter() == TRUE && $id != NULL){
 			echo $this->getClientAvailedServices();
 		}
 	}
-	
+
 	public function api_deleteClientService($id = NULL){
 		if($this->requestFilter() == TRUE && $id != NULL){
 			echo $this->delete_clientservice($id);
 		}
 	}
-	
+
 }
 
 /* End of file client_services.php */

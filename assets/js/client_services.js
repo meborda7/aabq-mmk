@@ -1,5 +1,5 @@
 $(function(){
-	
+
 	$('.rq_btn').click(
 		function(e){
 
@@ -44,8 +44,9 @@ $(function(){
 	  start.hide();
 	}).data('datepicker');
 
+	//******************** GETTING AVAILED SERVICES ********************//
 	$('#btn_get_services').click(function() {
-		var client_id = $('#select_client').val();
+		var client_id = $('#select_client_id').val();
 		$.ajax({
 			ContentType : 'application/json',
 			type : 'GET',
@@ -101,7 +102,31 @@ $(function(){
 			  console.log(textStatus, errorThrown);
 			}
 		});
-	})
+	});
+
+	//**************************** SAVE A SERVICE ***********************//
+	$('#btn_save_service').click(function() {
+		var client_id  = $('#select_client_id').val();
+		var service_id = $('#select_service_id').val();
+		var date_start = $('#date_start').val();
+		var date_end   = $('#date_end').val();
+		var remarks    = $('#add_info').val();
+
+		$.ajax({
+			ContentType: 'application/json',
+			type       : 'POST',
+			url        : 'register',
+			data       : {
+				'client_id' : client_id,
+				'service_id': service_id,
+				'date_start': date_start,
+				'date_end'  : date_end,
+				'remarks'   : remarks
+			}
+		});
+
+		$('#addModal').modal('hide');
+	});
 
 	function toUSD(number) {
 		var number = number.toString(),
