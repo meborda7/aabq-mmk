@@ -121,11 +121,15 @@ $(function(){
 				'service_id': service_id,
 				'date_start': date_start,
 				'date_end'  : date_end,
-				'remarks'   : remarks
+				'add_info'   : remarks
+			},
+			success: function(){
+				$('#addModal').modal('hide');
+				resetFields();
+				$('#btn_get_services').click();
 			}
 		});
 
-		$('#addModal').modal('hide');
 	});
 
 	function toUSD(number) {
@@ -136,5 +140,12 @@ $(function(){
 			.replace(/(\d{3}(?!$))/g, '$1,')
 			.split('').reverse().join('');
 	    return '$' + dollars + '.' + cents.slice(0, 2);
+	}
+	
+	function resetFields(){
+		$("input[type=text]").html("");
+		$("input[type=text]").val("");
+		$("#add_info").html("");
+		$("#add_info").val("");
 	}
 });
