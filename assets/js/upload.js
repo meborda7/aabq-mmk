@@ -1,7 +1,25 @@
 $(document).ready(function() {
 	
 	var uploadOkay = function(resp) {
-		alert(resp);
+		var arr = JSON.parse(resp);
+		var clientid = $('#select_client_id').val();
+		$.ajax({
+			type:'post',
+			dataType: 'json',
+			url: 'http://localhost/nightjar/files/api_add_file',
+			data: {
+				filename : arr,
+				client_id : clientid
+			},
+			async: false,
+			success:
+			function(result){
+				alert(result);
+			},
+			error: function(request, status, error){
+			
+			}
+		});	
 		populate_table();
 	};
 
@@ -15,33 +33,40 @@ $(document).ready(function() {
 	});
 	populate_table();
 	function populate_table(){
+		var clientid = $('#select_client_id').val();
 		$.ajax({
-			type            : 'GET',
-			contentType 	: 'json',
-			url             : './retrieves_files',
+			type:'post',
+			dataType: 'json',
+			url             : 'http://localhost/nightjar/files/retrieves_files',
+			data: {
+				id : clientid
+			},
+			async: false,
 			success       : function(result) {
+				console.log(result);
 				$('#tbody_uploaded_files').html('');
-				result = JSON.parse(result);
 				for (var key in result){
 					$('#tbody_uploaded_files').append(
 						'<tr>'+
-							'<td>' + result[key] + '</td>' +
+							'<td id="file'+ result[key].id +'">' + result[key].filename + '.' + result[key].ext +'</td>' +
 							'<td>' +
-								'<button value="'+result[key]+'" data-toggle="modal" data-target="#modifyModal" type="button" class="btn btn-primary btn_rename_file">Rename</button>'+
-								'<button value="'+result[key]+'" type="button" class="btn btn-danger btn_delete_file">Delete</button>'+
+								'<button value="'+result[key].id  +'" data-toggle="modal" data-target="#modifyModal" type="button" class="btn btn-primary btn_rename_file">Rename</button>'+
+								'<button value="'+result[key].id +'" type="button" class="btn btn-danger btn_delete_file">Delete</button>'+
 							'</td>' +
 						+'</tr>'
 					);
 				}
 				$('.btn_rename_file').click(function(){
 					var me = $(this);
-					var filename = me.val();
-					update_modal(filename);
+					var id = me.val();
+					var filename = $('#file'+ id).html();
+					update_modal(filename, id);
 				});
 				$('.btn_delete_file').click(function(){
 					var me = $(this);
-					var filename = me.val();
-					delete_file(filename);
+					var id = me.val();
+					var filename = $('#file'+ id).html();
+					delete_file(filename, id);
 				});
 			}
 		});
@@ -64,13 +89,15 @@ $(document).ready(function() {
 		});
 	}
 	
-	function update_modal(filename){
+	function update_modal(filename, id){
 		$('#old_filename').val(filename);
+		$('#btn_save').val(id);
 	}
 	
 	function rename_file(){
 		var oldfile = $('#old_filename').val();
 		var newfile = $('#new_filename').val();
+		var id = $('#btn_save').val();
 		if(newfile.trim() != ''){
 			var oldlen = oldfile.split('.').length;
 			var len = newfile.split('.').length;
@@ -84,6 +111,7 @@ $(document).ready(function() {
 						dataType: 'json',
 						url: './api_rename_file',
 						data: {
+							file_id : id,
 							old_name : oldfile,
 							new_name : newfile
 						},

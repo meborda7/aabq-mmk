@@ -45,11 +45,13 @@ define('PASSWORD_ENCODING',						'sha256');
 define('TABLE_CLIENT', 							'client');
 define('TABLE_PROF_SERVICES',					'prof_services');
 define('TABLE_CLIENT_SERVICES',					'client_services');
+define('TABLE_FILE',							'file');
 
 /* MODELS */
 define('MODEL_CLIENT', 							'ClientModel');
 define('MODEL_PROF_SERVICES', 					'ProfServicesModel');
 define('MODEL_CLIENT_SERVICES', 				'ClientServiceModel');
+define('MODEL_FILE',			 				'FileModel');
 
 /* JOIN */
 define('TABLE',									'table');

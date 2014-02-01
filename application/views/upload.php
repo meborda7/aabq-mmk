@@ -1,3 +1,21 @@
+<?php
+	$client_data = json_decode($client_data, true);
+	$results = $client_data['result'];
+?>
+
+<div class="well form-inline">
+	Select A Client:
+	<?php
+		echo '<select class="form-control" style="width: 20%;" id="select_client_id">';
+		foreach ($results as $row) {
+			echo '<option value="'. $row['id'] .'">';
+			echo $row['first_name'] . " " . $row['last_name'];
+			echo '</option>';
+		}
+		echo '</select>';
+	?>
+</div>
+
 <form action="#" method="post" enctype="multipart/form-data">
 	<input type="file" name="files[]" multiple="multiple">
 </form>
