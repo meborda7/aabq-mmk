@@ -93,8 +93,9 @@ class Files extends BaseController {
 				FILENAME	=> 		$fname
 			);
 			echo json_encode(array(RESULT => $this->FileModel->update($data, array(ID=>$file_id))));
+		} else{
+			echo json_encode(FALSE);
 		}
-		echo json_encode(FALSE);
 	}
 	
 	public function api_add_file(){		

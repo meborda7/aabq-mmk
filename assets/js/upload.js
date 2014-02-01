@@ -57,6 +57,7 @@ $(document).ready(function() {
 					);
 				}
 				$('.btn_rename_file').click(function(){
+					resetFields();
 					var me = $(this);
 					var id = me.val();
 					var filename = $('#file'+ id).html();
@@ -131,5 +132,12 @@ $(document).ready(function() {
 				alert("incorrect file extenstion");
 			}
 		}
+	}
+	
+	function resetFields(){		
+		$('#old_filename').val('');
+		$('#new_filename').val('');
+		$('#new_filename').html('');
+		$('#new_filename').html('');
 	}
 });
