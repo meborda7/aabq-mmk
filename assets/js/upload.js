@@ -119,6 +119,7 @@ $(document).ready(function() {
 						success:
 						function(result){
 							$('#modifyModal').modal('hide');
+							alert(result);
 							populate_table();
 						},
 						error: function(request, status, error){}

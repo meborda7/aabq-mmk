@@ -56,9 +56,9 @@ class Files extends BaseController {
 	public function delete_file(){
 		$filename = strip_tags($this->input->post("filename"));
 		$filename = PUBPATH . 'uploads/' . $filename;
-		//if(is_file ( $filename ) ){
+		if(is_file ( $filename ) ){
 			echo json_encode(unlink($filename));
-		//}
+		}
 	}
 	
 	/**
@@ -85,12 +85,16 @@ class Files extends BaseController {
 		$file_id = strip_tags($this->input->post("file_id"));
 		$old_name = strip_tags($this->input->post("old_name"));
 		$new_name = strip_tags($this->input->post("new_name"));
-		rename(FILE_PATH . $old_name, FILE_PATH . $new_name);
-		$fname = substr($new_name, 0, -4);
-		$data = array(
-			FILENAME	=> 		$fname
-		);
-		echo json_encode(array(RESULT => $this->FileModel->update($data, array(ID=>$file_id))));
+		$filename = PUBPATH . 'uploads/' . $old_name;		
+		if(is_file ( $filename ) ){
+			rename(FILE_PATH . $old_name, FILE_PATH . $new_name);
+			$fname = substr($new_name, 0, -4);
+			$data = array(
+				FILENAME	=> 		$fname
+			);
+			echo json_encode(array(RESULT => $this->FileModel->update($data, array(ID=>$file_id))));
+		}
+		echo json_encode(FALSE);
 	}
 	
 	public function api_add_file(){		
@@ -113,5 +117,5 @@ class Files extends BaseController {
 	}
 }
 
-/* End of file home.php */
-/* Location: ./application/controllers/home.php */
+/* End of file files.php */
+/* Location: ./application/controllers/files.php */
