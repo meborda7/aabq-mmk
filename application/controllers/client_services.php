@@ -10,7 +10,14 @@ define('CLIENT_ID', 					'client_id');
 define('SERVICE_ID', 					'service_id');
 define('DATE_START', 					'date_start');
 define('DATE_END', 						'date_end');
-define('REMARKS', 						'add_info');
+define('ADD_INFO', 						'add_info');
+
+define('NAME', 							'name');
+define('DESCRIPTION',					'description');
+define('PRICE', 						'price');
+define('REMARKS', 						'remarks');
+define('DISCOUNT', 						'discount');
+define('SLA', 							'sla');
 
 
 class Client_services extends BaseController {
@@ -31,15 +38,16 @@ class Client_services extends BaseController {
 		$this->load->model(MODEL_CLIENT_SERVICES);
 
 		if( $client_id  == NULL ){
-			$client_id   = strip_tags($this->input->post(CLIENT_ID));
+			$client_id = strip_tags($this->input->post(CLIENT_ID));
 		}
-		$service_id  = strip_tags($this->input->post(SERVICE_ID));
-		$date_start  = strip_tags($this->input->post(DATE_START));
-		$date_end     = strip_tags($this->input->post(DATE_END));
-		$date_end     = strip_tags($this->input->post(DATE_END));
-		$remarks     = strip_tags($this->input->post(REMARKS));
-		$data    = array();
-		$error_msg = array();
+
+		$service_id = strip_tags($this->input->post(SERVICE_ID));
+		$date_start = strip_tags($this->input->post(DATE_START));
+		$date_end   = strip_tags($this->input->post(DATE_END));
+		$date_end   = strip_tags($this->input->post(DATE_END));
+		$add_info   = strip_tags($this->input->post(ADD_INFO));
+		$data       = array();
+		$error_msg  = array();
 		$flag = TRUE;
 
 		if( !$this->IsNullOrEmptyString($client_id) ){
@@ -70,8 +78,8 @@ class Client_services extends BaseController {
 			$error_msg[DATE_END] = ERROR_MSG;
 		}
 
-		if( !$this->IsNullOrEmptyString($remarks) ){
-			$data[REMARKS] = $remarks;
+		if( !$this->IsNullOrEmptyString($add_info) ){
+			$data[ADD_INFO] = $add_info;
 		}
 
 		if($flag == TRUE){
@@ -80,38 +88,49 @@ class Client_services extends BaseController {
 	}
 
 	public function modify($id = NULL){
-		if($id != NULL){
-			$this->load->model(MODEL_CLIENT_SERVICES);
-			$date_start = strip_tags($this->input->post(DATE_START));
-			$date_end   = strip_tags($this->input->post(DATE_END));
-			$remarks   = strip_tags($this->input->post(REMARKS));
-			$data       = array();
-			$error_msg = array();
-			$flag = TRUE;
+		$this->load->model(MODEL_CLIENT_SERVICES);
 
-			if( !$this->IsNullOrEmptyString($date_start) ){
-				$data[DATE_START] = $date_start;
-			} else {
-				$flag = FALSE;
-				$error_msg[DATE_START] = ERROR_MSG;
-			}
+		if( $id  == NULL ){
+			$id = strip_tags($this->input->post(ID));
+		}
 
-			if( !$this->IsNullOrEmptyString($date_end) ){
-				$data[DATE_END] = $date_end;
-			} else {
-				$flag = FALSE;
-				$error_msg[DATE_END] = ERROR_MSG;
-			}
+		$service_id = strip_tags($this->input->post(SERVICE_ID));
+		$date_start = strip_tags($this->input->post(DATE_START));
+		$date_end   = strip_tags($this->input->post(DATE_END));
+		$add_info   = strip_tags($this->input->post(ADD_INFO));
+		$data       = array();
+		$error_msg  = array();
+		$flag       = TRUE;
 
-			if( !$this->IsNullOrEmptyString($remarks) ){
-				$data[REMARKS] = $remarks;
-			}
+		if( !$this->IsNullOrEmptyString($service_id) ){
+			$data[SERVICE_ID] = $service_id;
+		} else {
+			$flag = FALSE;
+			$error_msg[SERVICE_ID] = ERROR_MSG;
+		}
 
-			if( isset($data) ){
-				echo json_encode(array(RESULT => $this->ClientServiceModel->update($data, array(ID=>$id))));
-			} else {
-				echo json_encode(array(RESULT => FALSE));
-			}
+		if( !$this->IsNullOrEmptyString($date_start) ){
+			$data[DATE_START] = $date_start;
+		} else {
+			$flag = FALSE;
+			$error_msg[DATE_START] = ERROR_MSG;
+		}
+
+		if( !$this->IsNullOrEmptyString($date_end) ){
+			$data[DATE_END] = $date_end;
+		} else {
+			$flag = FALSE;
+			$error_msg[DATE_END] = ERROR_MSG;
+		}
+
+		if( !$this->IsNullOrEmptyString($add_info) ){
+			$data[ADD_INFO] = $add_info;
+		}
+
+		if( isset($data) ){
+			echo json_encode(array(RESULT => $this->ClientServiceModel->update($data, array(ID=>$id))));
+		} else {
+			echo json_encode(array(RESULT => FALSE));
 		}
 	}
 
@@ -129,7 +148,6 @@ class Client_services extends BaseController {
 
 	public function delete_clientservice($id){
 		echo $this->delete(MODEL_CLIENT_SERVICES, $id);
-		echo '<br /><a href="'. base_url().'client_services/' .'">View Client Services</a>';
 	}
 
 	public function getClientAvailedServices($id = NULL){
@@ -143,10 +161,23 @@ class Client_services extends BaseController {
 			)
 		);
 
+		$columns =  TABLE_CLIENT_SERVICES . "." . ID . ",".
+					TABLE_CLIENT_SERVICES . "." . CLIENT_ID . ",".
+					TABLE_CLIENT_SERVICES . "." . SERVICE_ID . ",".
+					TABLE_CLIENT_SERVICES . "." . DATE_START . ",".
+					TABLE_CLIENT_SERVICES . "." . DATE_END . ",".
+					TABLE_CLIENT_SERVICES . "." . ADD_INFO . ",".
+					TABLE_PROF_SERVICES . "." . ID . " AS prof_service_id,".
+					TABLE_PROF_SERVICES . "." . NAME . ",".
+					TABLE_PROF_SERVICES . "." . DESCRIPTION . ",".
+					TABLE_PROF_SERVICES . "." . PRICE . ",".
+					TABLE_PROF_SERVICES . "." . DISCOUNT . ",".
+					TABLE_PROF_SERVICES . "." . SLA;
+
 		if($id == NULL){
 			return json_encode(array("client_service" => $this->ClientServiceModel->select(NULL, NULL, NULL, $join )));
 		} else {
-			return json_encode(array("client_service" => $this->ClientServiceModel->select(NULL, array(CLIENT_ID => $id), NULL, $join )));
+			return json_encode(array("client_service" => $this->ClientServiceModel->select($columns, array(CLIENT_ID => $id), NULL, $join )));
 		}
 	}
 

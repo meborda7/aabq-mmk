@@ -1,5 +1,8 @@
 $(function(){
 
+	var is_modify         = false;
+	var client_service_id = -1;
+
 	$('.rq_btn').click(
 		function(e){
 
@@ -58,7 +61,7 @@ $(function(){
 								+'<tr>'
 									+'<th>Name</th>'
 									+'<th>Price</th>'
-									+'<th>Remarks</th>'
+									+'<th>Add Info</th>'
 									+'<th>Discount</th>'
 									+'<th>SLA</th>'
 									+'<th>Start</th>'
@@ -68,20 +71,18 @@ $(function(){
 
 				for (var i in data.client_service) {
 					var service = data.client_service[i];
-					console.log(service);
 					content += '<tr>'
 								+'<td>'+ service.name +'</td>'
 								+'<td>'+ service.price +'</td>'
-								+'<td>'+ service.remarks +'</td>'
+								+'<td>'+ service.add_info +'</td>'
 								+'<td>'+ service.discount +'</td>'
 								+'<td>'+ service.sla +'</td>'
 								+'<td>'+ service.date_start +'</td>'
 								+'<td>'+ service.date_end +'</td>'
 								+'<td>'
-									+'<button value="'+ service.id +'" type="button" class="btn btn-primary btn_update">Update</button>'
-									+ '<button value="'+ service.id +'" type="button" class="btn btn-danger btn_cancel">Cancel</button>'
-								+'</td>'
-								;
+									+'<button value="'+ service.id +'" type="button" class="btn btn-primary" id="btn_update'+ service.id +'">Update</button>'
+									+ '<button value="'+ service.id +'" type="button" class="btn btn-danger" id="btn_delete">Delete</button>'
+								+'</td>';
 					content += '</tr>';
 
 					// validate appropriate values
@@ -97,6 +98,37 @@ $(function(){
 				content += '</table>';
 				content += '<div class="well" style="text-align:right;"><b>Total Price: '+ toUSD(total) +'</b></dv>';
 				$('#output').html(content);
+
+				//************************** UPDATE A SERVICE **********************//
+				$('button[id^=btn_update]').click(function() {
+					is_modify         = true;
+					client_service_id = $(this).val();
+					var service_id    = $('#select_service_id').val();
+					var tableRowData  = $(this).parent().siblings('td').map(function() {
+						return $(this).text();
+					}).get();
+
+					addServiceDataToFields(service_id, tableRowData);
+				});
+
+				//************************** DELETE A SERVICE **********************//
+				$('button[id^=btn_delete]').click(function() {
+					var client_service_id = $(this).val();
+					var diag = confirm("Do you want to remove this service?");
+					if (diag) {
+						$.ajax({
+							ContentType: 'application/json',
+							type       : 'GET',
+							url        : 'delete_clientservice/' + client_service_id,
+							success    : function(data) {
+								data = JSON.parse(data);
+								if (data.result) {
+									$('#btn_get_services').click();
+								}
+							}
+					});
+					}
+				});
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 			  console.log(textStatus, errorThrown);
@@ -110,26 +142,37 @@ $(function(){
 		var service_id = $('#select_service_id').val();
 		var date_start = $('#date_start').val();
 		var date_end   = $('#date_end').val();
-		var remarks    = $('#add_info').val();
+		var add_info   = $('#add_info').val();
+		var url        = (is_modify) ? 'modify' : 'register';
 
 		$.ajax({
 			ContentType: 'application/json',
 			type       : 'POST',
-			url        : 'register',
+			url        : url,
 			data       : {
+				'id'        : client_service_id,
 				'client_id' : client_id,
 				'service_id': service_id,
 				'date_start': date_start,
 				'date_end'  : date_end,
-				'add_info'   : remarks
+				'add_info'  : add_info
 			},
 			success: function(){
+				// reset the following globals to default values
+				is_modify         = false;
+				client_service_id = -1;
+
+				// UI Updates
 				$('#addModal').modal('hide');
 				resetFields();
 				$('#btn_get_services').click();
 			}
 		});
+	});
 
+	
+	$('#btn_cancel').click(function() {
+		alert('Delete Service');
 	});
 
 	function toUSD(number) {
@@ -143,9 +186,26 @@ $(function(){
 	}
 	
 	function resetFields(){
+		$("#select_service_id").val($("#select_service_id option:first").val());
 		$("input[type=text]").html("");
 		$("input[type=text]").val("");
 		$("#add_info").html("");
 		$("#add_info").val("");
+	}
+
+	function addServiceDataToFields(service_id, tableRowData) {
+		var date_start = tableRowData[5];
+		var date_end   = tableRowData[6];
+		var add_info   = tableRowData[2];
+
+		$('#addModal').modal('show');
+		if (service_id)
+			$('#select_service_id').val(service_id);
+		if (date_start)
+			$('#date_start').val(date_start);
+		if (date_end)
+			$('#date_end').val(date_end);
+		if (add_info)
+			$('#add_info').val(add_info);
 	}
 });
