@@ -80,8 +80,9 @@ $(function(){
 								+'<td>'+ service.date_start +'</td>'
 								+'<td>'+ service.date_end +'</td>'
 								+'<td>'
+									+'<input type="hidden" id="prof_service_id'+ service.id +'" value="'+ service.prof_service_id +'" />'
 									+'<button value="'+ service.id +'" type="button" class="btn btn-primary" id="btn_update'+ service.id +'">Update</button>'
-									+ '<button value="'+ service.id +'" type="button" class="btn btn-danger" id="btn_delete">Delete</button>'
+									+'<button value="'+ service.id +'" type="button" class="btn btn-danger" id="btn_delete">Delete</button>'
 								+'</td>';
 					content += '</tr>';
 
@@ -101,14 +102,14 @@ $(function(){
 
 				//************************** UPDATE A SERVICE **********************//
 				$('button[id^=btn_update]').click(function() {
-					is_modify         = true;
-					client_service_id = $(this).val();
-					var service_id    = $('#select_service_id').val();
-					var tableRowData  = $(this).parent().siblings('td').map(function() {
+					is_modify           = true;
+					client_service_id   = $(this).val();
+					var prof_service_id = $('#prof_service_id'+client_service_id).val();
+					var tableRowData    = $(this).parent().siblings('td').map(function() {
 						return $(this).text();
 					}).get();
 
-					addServiceDataToFields(service_id, tableRowData);
+					addServiceDataToFields(prof_service_id, tableRowData);
 				});
 
 				//************************** DELETE A SERVICE **********************//
@@ -193,14 +194,14 @@ $(function(){
 		$("#add_info").val("");
 	}
 
-	function addServiceDataToFields(service_id, tableRowData) {
+	function addServiceDataToFields(prof_service_id, tableRowData) {
 		var date_start = tableRowData[5];
 		var date_end   = tableRowData[6];
 		var add_info   = tableRowData[2];
 
 		$('#addModal').modal('show');
-		if (service_id)
-			$('#select_service_id').val(service_id);
+		if (prof_service_id)
+			$('#select_service_id').val(prof_service_id);
 		if (date_start)
 			$('#date_start').val(date_start);
 		if (date_end)
