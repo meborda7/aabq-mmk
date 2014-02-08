@@ -48,7 +48,7 @@ class Professional_service extends BaseController {
 			$data['service_data'] = $updateData;
 			$data['error_data']   = $error_data;
 		} else {
-			$data['service_data'] = $this->select($id);
+			$data['service_data'] = $this->select(MODEL_PROF_SERVICES, $id);
 		}
 		$this->load->view($this->layout, $data);
 	}
@@ -158,12 +158,13 @@ class Professional_service extends BaseController {
 		}
 	}
 
+	/*
 	public function select($id){
 		if ($id != NULL) {
 			return $this->select(MODEL_PROF_SERVICES, $id);
 		}
 	}
-
+	*/
 	public function delete($id){
 		if ($id != NULL) {
 			var_dump($id);
