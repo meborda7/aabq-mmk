@@ -49,7 +49,7 @@ define('TABLE_FILE',							'file');
 
 /* MODELS */
 define('MODEL_CLIENT', 							'ClientModel');
-define('MODEL_PROF_SERVICES', 					'ProfServicesModel');
+define('MODEL_PROF_SERVICES', 					'ProfServiceModel');
 define('MODEL_CLIENT_SERVICES', 				'ClientServiceModel');
 define('MODEL_FILE',			 				'FileModel');
 

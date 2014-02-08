@@ -7,9 +7,9 @@
 		$navigations = array(
 			'home/'                  => 'Home',
 			'client/'                => 'Client',
-			'professional_services/' => 'Professional Services',
-			'client_services/'       => 'Client Services',
-			'files/'       		 => 'Upload'
+			'professional_service/' => 'Professional Services',
+			'client_service/'       => 'Client Services',
+			'files/'                 => 'Upload'
 		);
 
 

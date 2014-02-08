@@ -1,7 +1,11 @@
 <div class="">
 	<?php
-		$results = json_decode($services, true);
-	?>	
+		$results = json_decode($service_data, true);
+	?>
+	<div class="well">
+		<a href="<?php echo base_url(); ?>professional_service/add" class="btn btn-warning"><span class="glyphicon glyphicon-plus"></span> Add New Service</a>
+	</div>
+
 	<table class="table table-striped table-bordered">
 		<tr>
 			<th>Name</th>
@@ -21,7 +25,8 @@
 				<td><?php echo $row['discount'] ?></td>
 				<td><?php echo $row['sla'] ?></td>
 				<td style="width:12%">
-					<a href="<?php echo base_url(); ?>client_service/add/<?php echo $row['id']; ?>" class="btn btn-info btn-xs">Request</a>
+					<a href="<?php echo base_url(); ?>professional_service/update/<?php echo $id ?>" class="btn btn-info btn-xs">Update</a>
+					<a href="<?php echo base_url(); ?>professional_service/delete/<?php echo $id ?>" class="btn btn-danger btn-xs">Delete</a>
 				</td>
 			</tr>
 		<?php } ?>

@@ -10,11 +10,11 @@
 		$date_start = $service[DATE_START];
 		$date_end   = $service[DATE_END];
 		$remarks   = $service[REMARKS];
-		$method =  base_url() . "client_services/modify/" . $id;
+		$method =  base_url() . "client_service/modify/" . $id;
 		$ser_id = $service[SERVICE_ID];
 		$name = $service["name"];
 	} else {
-		$method =  base_url() . "client_services/register/2";
+		$method =  base_url() . "client_service/register/2";
 	}
 ?>
 
