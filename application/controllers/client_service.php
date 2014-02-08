@@ -24,7 +24,7 @@ class Client_service extends BaseController {
 
 	public function index() {
 		$data['title']           = 'Client Services | ' . APP_NAME;
-		$data['content']         = 'client_service/content_client_services';
+		$data['content']         = 'client_service/content_client_service';
 		$data['css']             = base_url() . 'assets/css/bootstrap-theme.min.css';
 		$data['js']              = array(base_url() . 'assets/js/client_service.js',
 										base_url() . 'assets/js/bootstrap-datepicker.js');
@@ -209,7 +209,7 @@ class Client_service extends BaseController {
 								base_url() . 'assets/js/client_service.js');
 		$data['activeId'] = NAV_ACTIVE_ID;
 		$this->load->model(MODEL_PROF_SERVICES);
-		$data['services'] = json_encode(array(RESULT => $this->ProfServicesModel->select()));
+		$data['services'] = json_encode(array(RESULT => $this->ProfServiceModel->select()));
 
 		$this->load->view($this->layout, $data);
 	}
@@ -222,7 +222,7 @@ class Client_service extends BaseController {
 								base_url() . 'assets/js/client.js');
 		$data['service_id']  =  $id;
 		$this->load->model(MODEL_PROF_SERVICES);
-		$service = $this->ProfServicesModel->select(null, array(ID=>$id));
+		$service = $this->ProfServiceModel->select(null, array(ID=>$id));
 		if(count($service) > 0){
 			$data['name'] = $service[0]->name;
 		}
@@ -266,7 +266,7 @@ class Client_service extends BaseController {
 	
 	public function getServiceNames(){
 		$this->load->model(MODEL_PROF_SERVICES);
-        return json_encode($this->ProfServicesModel->select(array(ID,'name')));
+        return json_encode($this->ProfServiceModel->select(array(ID,'name')));
 	}
 
 	//******************** API CALLS ********************//
