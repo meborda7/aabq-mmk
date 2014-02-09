@@ -56,50 +56,11 @@ class Professional_service extends BaseController {
 	public function register(){
 		$this->load->model(MODEL_PROF_SERVICES);
 
-		$name        = strip_tags($this->input->post(NAME));
-		$description = strip_tags($this->input->post(DESCRIPTION));
-		$price       = strip_tags($this->input->post(PRICE));
-		$remarks     = strip_tags($this->input->post(REMARKS));
-		$discount    = strip_tags($this->input->post(DISCOUNT));
-		$sla         = strip_tags($this->input->post(SLA));
-		$flag        = TRUE;
-		$data        = array();
-		$error_msg   = array();
-
-		if( !$this->IsNullOrEmptyString($name) ){
-			$data[NAME] = $name;
-			$error_msg[NAME] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[NAME] = ERROR_MSG;
-		}
-
-		if( !$this->IsNullOrEmptyString($description) ){
-			$data[DESCRIPTION] = $description;
-			$error_msg[DESCRIPTION] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[DESCRIPTION] = ERROR_MSG;
-		}
-
-		if( !$this->IsNullOrEmptyString($price) ){
-			$data[PRICE] = $price;
-		}
-
-		if( !$this->IsNullOrEmptyString($remarks) ){
-			$data[REMARKS] = $remarks;
-		}
-
-		if( !$this->IsNullOrEmptyString($discount) ){
-			$data[DISCOUNT] = $discount;
-		}
-
-		if( !$this->IsNullOrEmptyString($sla) ){
-			$data[SLA] = $sla;
-		}
-
-		if ($flag == TRUE) {
-			echo json_encode(array(RESULT => $this->ProfServiceModel->insert($data)));
+		$data = $this->input->post();
+		if($data){	
+			$result = $this->ProfServiceModel->insert($data);
+			if($result != FALSE) 
+			echo json_encode(array(RESULT => $result ));
 			echo '<br /><a href="'. base_url().'professional_service/' .'">View Professional Services</a>';
 		} else {
 			// if there are inappropriate values being inputted, we would like it to be reflected
@@ -110,47 +71,11 @@ class Professional_service extends BaseController {
 
 	public function modify(){
 		$this->load->model(MODEL_PROF_SERVICES);
-		$flag      = TRUE;
-		$id        = strip_tags($this->input->post(ID));
-		$name      = strip_tags($this->input->post(NAME));
-		$desc      = strip_tags($this->input->post(DESCRIPTION));
-		$price     = strip_tags($this->input->post(PRICE));
-		$remarks   = strip_tags($this->input->post(REMARKS));
-		$discount  = strip_tags($this->input->post(DISCOUNT));
-		$sla       = strip_tags($this->input->post(SLA));
-		$data      = array();
-		$error_msg = array();
-
-		if( !$this->IsNullOrEmptyString($name) ){
-			$data[NAME] = $name;
-			$error_msg[NAME] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[NAME] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($desc) ){
-			$data[DESCRIPTION] = $desc;
-			$error_msg[DESCRIPTION] = ERROR_MSG;
-		} else {
-			$flag = FALSE;
-			$error_msg[DESCRIPTION] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($price) && is_numeric($price)){
-			$data[PRICE] = $price;
-		}
-
-		// remarks can be null
-		$data[REMARKS] = $remarks;
-
-		if( !$this->IsNullOrEmptyString($discount) && is_numeric($discount)){
-			$data[DISCOUNT] = $discount;
-		}
-		if( !$this->IsNullOrEmptyString($sla) ){
-			$data[SLA] = $sla;
-		}
-
-		if( $flag == TRUE && isset($data) ){
-			echo json_encode(array(RESULT => $this->ProfServiceModel->update($data, array(ID=>$id))));
+		$data = $this->input->post();
+		$id   = strip_tags($this->input->post(ID));
+		if( $data ){
+			$result = $this->ProfServiceModel->update($data, array(ID=>$id));
+			echo json_encode(array(RESULT => $result ));
 			echo '<br /><a href="'. base_url().'professional_service/' .'">View Professional Services</a>';
 		} else {
 			$data[ID] = $id;

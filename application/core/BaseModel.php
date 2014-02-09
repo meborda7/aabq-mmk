@@ -81,7 +81,8 @@ class BaseModel extends CI_Model{
 	 * @return	
 	 */
 	function insert($arg_data = NULL){
-		if($arg_data != NULL){
+		$arg_data = $this->checkData($arg_data);
+		if($arg_data != FALSE  ){
 			$result=$this->db->insert($this->table,$arg_data);
 			return $result;
 		}
@@ -97,7 +98,8 @@ class BaseModel extends CI_Model{
 	 * @return
 	 */
 	function update($arg_data = NULL, $conditions = NULL){
-		if($arg_data != NULL){
+		$arg_data = $this->checkData($arg_data);
+		if($arg_data != FALSE){
 			$this->db->set($arg_data);
 			if($conditions != NULL){
 				$this->db->where($conditions); 
@@ -138,6 +140,13 @@ class BaseModel extends CI_Model{
 		$result=$this->db->empty_table($this->table);
 		return $result;
     }
+
+	/**
+	 * Checks if string is empty or not
+	 */
+	function IsNullOrEmptyString($var = NULL){
+		return (!isset($var) || trim($var)==='');
+	}
 	
 }
 
