@@ -59,170 +59,33 @@ class Client extends BaseController {
 
 	public function register(){
 		$this->load->model(MODEL_CLIENT);
-		$flag = TRUE;
-
-		$fname   = strip_tags($this->input->post(FNAME));
-		$lname   = strip_tags($this->input->post(LNAME));
-		$uname   = strip_tags($this->input->post(UNAME));
-		$pwd     = strip_tags($this->input->post(PWD));
-		$address = strip_tags($this->input->post(ADDRESS));
-		$email   = strip_tags($this->input->post(EMAIL));
-		$contact = strip_tags($this->input->post(CONTACT));
-		$data    = array();
-		$error_msg = array();
-
-		if( !$this->IsNullOrEmptyString($fname) ){
-			$data[FNAME] = $fname;
-			$error_msg[FNAME] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[FNAME] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($lname) ){
-			$data[LNAME] = $lname;
-			$error_msg[LNAME] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[LNAME] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($pwd) ){
-			$data[PWD] = $pwd;
-			$error_msg[PWD] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[PWD] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($uname) ){
-			$data[UNAME] = $uname;
-			$error_msg[UNAME] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[UNAME] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($address) ){
-			$data[ADDRESS] = $address;
-			$error_msg[ADDRESS] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[ADDRESS] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($email) ){
-			$data[EMAIL] = $email;
-			$error_msg[EMAIL] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[EMAIL] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($contact) ){
-			$data[CONTACT] = $contact;
-			$error_msg[CONTACT] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[CONTACT] = ERROR_MSG;
-		}
-
-		if( $flag  && $uname != NULL && !$this->isExistingUsername($uname) && $pwd != NULL){
-			$pwd = hash ( PASSWORD_ENCODING, $pwd );
-			$data = array(
-				FNAME 		=> 		$fname,
-				LNAME 		=> 		$lname,
-				UNAME 		=> 		$uname,
-				PWD 		=> 		$pwd,
-				ADDRESS 	=> 		$address,
-				EMAIL 		=> 		$email,
-				CONTACT 	=> 		$contact
-			);
-			echo json_encode(array(RESULT => $this->ClientModel->insert($data)));
+		
+		$data = $this->input->post();
+		if ($data) {
+			$result = $this->ClientModel->insert($data);
+			if($result != FALSE) 
+				echo json_encode(array(RESULT => $result));
 			echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
-		}
-		else {
+		} else {
+			// if there are inappropriate values being inputted, we would like it to be reflected
+			// in the UI and display the appropriate error messages..
 			$this->add($data, $error_msg);
 		}
 	}
 
 	public function modify(){
 		$this->load->model(MODEL_CLIENT);
-		$flag 	 = TRUE;
-		$id      = strip_tags($this->input->post(ID));
-		$fname   = strip_tags($this->input->post(FNAME));
-		$lname   = strip_tags($this->input->post(LNAME));
-		$uname   = strip_tags($this->input->post(UNAME));
-		$pwd     = strip_tags($this->input->post(PWD));
-		$address = strip_tags($this->input->post(ADDRESS));
-		$email   = strip_tags($this->input->post(EMAIL));
-		$contact = strip_tags($this->input->post(CONTACT));
-		$data    = array();
-		$error_msg = array();
+		$data = $this->input->post();
+		$id   = strip_tags($this->input->post(ID));
 
-		if( !$this->IsNullOrEmptyString($fname) ){
-			$data[FNAME] = $fname;
-			$error_msg[FNAME] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[FNAME] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($lname) ){
-			$data[LNAME] = $lname;
-			$error_msg[LNAME] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[LNAME] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($uname) ){
-			$data[UNAME] = $uname;
-			$error_msg[UNAME] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[UNAME] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($pwd) ){
-			$data[PWD] = $pwd;
-			$error_msg[PWD] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[PWD] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($address) ){
-			$data[ADDRESS] = $address;
-			$error_msg[ADDRESS] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[ADDRESS] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($email) ){
-			$data[EMAIL] = $email;
-			$error_msg[EMAIL] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[EMAIL] = ERROR_MSG;
-		}
-		if( !$this->IsNullOrEmptyString($contact) ){
-			$data[CONTACT] = $contact;
-			$error_msg[CONTACT] = "";
-		} else {
-			$flag = FALSE;
-			$error_msg[CONTACT] = ERROR_MSG;
-		}
-
-		if( $flag == TRUE && isset($data) ){
-			echo json_encode(array(RESULT => $this->ClientModel->update($data, array(ID=>$id))));
+		if( $data ){
+			$result = $this->ClientModel->update($data, array(ID=>$id));
+			echo json_encode(array(RESULT => $result));
 			echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
 		} else {
 			$data[ID] = $id;
 			$this->update($id, $data, $error_msg);
 		}
-
-	}
-
-	public function isExistingUsername($uname = NULL){
-		if($uname != NULL){
-			$this->load->model(MODEL_CLIENT);
-			$result = $this->ClientModel->select(null, array(UNAME=>$uname));
-			if($result != NULL && count($result) > 0){
-				return TRUE;
-			}
-		}
-		return FALSE;
 	}
 
 	public function selectClient($id = NULL){
