@@ -30,7 +30,7 @@ class Professional_service extends BaseController {
 		$data['js']       = base_url() . 'assets/js/client.js';
 		$data['activeId'] = NAV_ACTIVE_ID;
 		$data['isModify'] = FALSE;
-		if ($update_data != NULL) {
+		if ( $update_data != NULL ) {
 			$data['service_data'] = $update_data;
 			$data['error_data']   = $error_data;
 		}
@@ -44,7 +44,7 @@ class Professional_service extends BaseController {
 		$data['js']       = base_url() . 'assets/js/client.js';
 		$data['activeId'] = NAV_ACTIVE_ID;
 		$data['isModify'] = TRUE;
-		if($updateData != null){
+		if( $updateData != null ){
 			$data['service_data'] = $updateData;
 			$data['error_data']   = $error_data;
 		} else {
@@ -57,27 +57,31 @@ class Professional_service extends BaseController {
 		$this->load->model(MODEL_PROF_SERVICES);
 
 		$data = $this->input->post();
-		if($data){	
+		$result = FALSE;
+		if( $data ){
 			$result = $this->ProfServiceModel->insert($data);
 			if($result != FALSE) 
 			echo json_encode(array(RESULT => $result ));
 			echo '<br /><a href="'. base_url().'professional_service/' .'">View Professional Services</a>';
-		} else {
+		} 
+		if( $result == FALSE ){
 			// if there are inappropriate values being inputted, we would like it to be reflected
 			// in the UI and display the appropriate error messages..
 			$this->add($data, $error_msg);
-		}
+		}		
 	}
 
 	public function modify(){
 		$this->load->model(MODEL_PROF_SERVICES);
 		$data = $this->input->post();
-		$id   = strip_tags($this->input->post(ID));
+		$result = FALSE;
 		if( $data ){
+			$id   = strip_tags($this->input->post(ID));
 			$result = $this->ProfServiceModel->update($data, array(ID=>$id));
 			echo json_encode(array(RESULT => $result ));
 			echo '<br /><a href="'. base_url().'professional_service/' .'">View Professional Services</a>';
-		} else {
+		} 
+		if( $result == FALSE ){
 			$data[ID] = $id;
 			$this->update($id, $data, $error_msg);
 		}
@@ -91,7 +95,7 @@ class Professional_service extends BaseController {
 	}
 	*/
 	public function delete($id){
-		if ($id != NULL) {
+		if ( $id != NULL ) {
 			var_dump($id);
 			if (is_array($id)) {
 				return $this->delete(MODEL_PROF_SERVICES, NULL, $id);
@@ -108,29 +112,30 @@ class Professional_service extends BaseController {
 
 	//******************** API CALLS ********************//
 	public function api_selectAll() {
-		if($this->requestFilter() == TRUE) {
+		if( $this->requestFilter() == TRUE ) {
 			echo $this->selectAll(MODEL_CLIENT);
 		}
 	}
 
 	public function api_select($id = NULL) {
-		if($this->requestFilter() == TRUE && $id != NULL) {
+		if( $this->requestFilter() == TRUE && $id != NULL ) {
 			echo $this->select($id);
 		}
 	}
 
 	public function api_delete() {
 		$postData= $this->input->post(ID);
-		if($this->requestFilter() == TRUE && $postData != NULL) {
+		if( $this->requestFilter() == TRUE && $postData != NULL ) {
 			echo $this->delete($postData);
 		}
 	}
 
 	public function api_deleteAll() {
-		if($this->requestFilter() == TRUE && $id != NULL) {
+		if( $this->requestFilter() == TRUE && $id != NULL ) {
 			echo $this->deleteAll();
 		}
 	}
+	
 }
 
 /* End of file professional_services.php */
