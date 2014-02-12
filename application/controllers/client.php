@@ -60,13 +60,16 @@ class Client extends BaseController {
 	public function register(){
 		$this->load->model(MODEL_CLIENT);
 		
-		$data = $this->input->post();
+		$data   = $this->input->post();
+		$result = FALSE;
+
 		if ($data) {
 			$result = $this->ClientModel->insert($data);
 			if($result != FALSE) 
 				echo json_encode(array(RESULT => $result));
 			echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
-		} else {
+		}
+		if ($result == FALSE) {
 			// if there are inappropriate values being inputted, we would like it to be reflected
 			// in the UI and display the appropriate error messages..
 			$this->add($data, $error_msg);
@@ -75,14 +78,16 @@ class Client extends BaseController {
 
 	public function modify(){
 		$this->load->model(MODEL_CLIENT);
-		$data = $this->input->post();
-		$id   = strip_tags($this->input->post(ID));
+		$data   = $this->input->post();
+		$result = FALSE;
 
 		if( $data ){
+			$id   = strip_tags($this->input->post(ID));
 			$result = $this->ClientModel->update($data, array(ID=>$id));
 			echo json_encode(array(RESULT => $result));
 			echo '<br /><a href="'. base_url().'client/' .'">View Clients</a>';
-		} else {
+		}
+		if ($result == FALSE) {
 			$data[ID] = $id;
 			$this->update($id, $data, $error_msg);
 		}
